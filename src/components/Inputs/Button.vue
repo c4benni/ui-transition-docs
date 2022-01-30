@@ -67,10 +67,8 @@ export default defineComponent({
     @apply focus-visible:ring-1 ring-offset-2 ring-offset-transparent;
 }
 
-@media (pointer: fine) and (hover: hover) {
-    .Button{
-        @apply hover:bg-opacity-80
-    }
+ .Button{
+    @apply can-hover:hover:bg-opacity-80
 }
 
 .Button{
