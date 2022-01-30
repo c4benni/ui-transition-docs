@@ -155,3 +155,7 @@ textarea {
     var(--appear-ease, linear);
   --fade-appear-to: 1;
 }
+
+.w-h-full{
+  @apply w-full h-full;
+}
