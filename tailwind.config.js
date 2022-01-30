@@ -1,4 +1,5 @@
 const theme = require("./theme.tailwind");
+const plugin = require("tailwindcss/plugin");
 
 module.exports = {
   content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
@@ -13,6 +14,10 @@ module.exports = {
       ringOpacity: ["dark"],
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(function ({ addVariant }) {
+      addVariant("can-hover", ["@media (pointer: fine) and (hover: hover)"]);
+    }),
+  ],
   important: true,
 };
