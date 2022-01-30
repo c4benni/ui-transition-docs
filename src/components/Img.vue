@@ -7,6 +7,7 @@ import Intersection from './Intersection.vue';
 const cl = new Cloudinary({cloud_name: "c4benn", secure: true});
 
 export default defineComponent({
+    emits:['load-start', 'load-success', 'load-error'],
     props:{
         publicId: undefinedProp(String),
         src: undefinedProp(String),
@@ -15,7 +16,7 @@ export default defineComponent({
         height: undefinedProp(Number),
         quality: undefinedProp([String || Number])
     },
-    setup(p) {
+    setup(p, {attrs, emit}) {
         const props = computed(()=>p);
         const loaded = ref(false);
 
@@ -43,6 +44,8 @@ export default defineComponent({
 
             loaded.value =false;
 
+            emit('load-start')
+
             const img = new Image();
 
             const toggleLoaded = (val:boolean)=>{
@@ -51,6 +54,8 @@ export default defineComponent({
                 img.onload = null;
 
                 loaded.value = val;
+
+                emit(val ? 'load-success' : 'load-error')
             }
 
             img.onload = ()=>{
@@ -84,6 +89,7 @@ export default defineComponent({
 
                     return loaded.value ?
                         h('img',{
+                            ...attrs,
                             src: getSrc.value,
                             alt: props.value.alt,
                             height: props.value.height,
@@ -94,6 +100,7 @@ export default defineComponent({
                                 getSrc.value: undefined,
                         })
                         : h('div',{
+                            ...attrs,
                             class: 'bg-card dark:bg-card-dark',
                             style:{
                                 height: `${props.value.height}px`,
