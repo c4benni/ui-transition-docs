@@ -1,15 +1,16 @@
 <template>
-  <div
-    class="w-[400px] h-[400px] bg-card"
-  >
-
-  </div>
+  <IPhone>
+    <MockupContent/>
+  </IPhone>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import IPhone from '../../../../Mockup/iPhone.vue'
+import MockupContent from './Content.vue'
 
 export default defineComponent({
-    name:'Mockup'
+    name: "Mockup",
+    components: { IPhone, MockupContent },
 })
 </script>
