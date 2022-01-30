@@ -11,3 +11,19 @@ export const mediaListener :MediaListener= ({ media, callback }) => {
     }
   }
 };
+
+
+export function isHTML(el: any) {
+  return el instanceof HTMLElement;
+}
+
+export function nextAnimFrame() {
+  return new Promise((resolve) => {
+    requestAnimationFrame(resolve);
+  });
+}
+
+export const undefinedProp = (type: any | any[]) => ({
+  type,
+  default: undefined,
+});
