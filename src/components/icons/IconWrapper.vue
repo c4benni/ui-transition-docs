@@ -1,14 +1,26 @@
-<template>
-  <span class="IconWrapper">
-    <slot />
-  </span>
-</template>
-
 <script lang="ts">
-import { defineComponent } from "vue";
+import { computed, defineComponent, h } from "vue";
 
 export default defineComponent({
   name: "IconWrapper",
+
+  props: {
+    tag: {
+      type: String,
+      default: "span",
+    },
+  },
+
+  setup(p, { slots, attrs }) {
+    const props = computed(() => p);
+
+    return () => {
+      return h(props.value.tag,{
+        ...attrs,
+        class:'IconWrapper'
+      },[slots.default?.()||null])
+    };
+  },
 });
 </script>
 
