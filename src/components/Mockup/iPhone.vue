@@ -2,7 +2,7 @@
   <div role="presentation" aria-hidden="true" class="Mockup">
     <Intersection #default="{ isIntersecting }">
       <div class="frame">
-        <div v-if="isIntersecting" class="screen">
+        <div v-if="isIntersecting && mockupLoaded" class="screen">
           <div class="status-bar">
             <span class="pl-2"> 9:41 </span>
 
@@ -21,19 +21,41 @@
             />
           </div>
         </div>
+
+        <div 
+          v-if="!mockupLoaded"
+        :class="[
+          'screen grid justify-center items-center border',
+          classNames.divideColor
+        ]">
+          <Loader class="text-5xl"/>
+        </div>
       </div>
     </Intersection>
-    <img src="iphone_large_2x.png" class="image" />
+
+    <Img
+      public-id="mockup/iphone_large_2x_pw8fnw.png"
+      :class="[
+        'image',
+        {
+          invisible: !mockupLoaded,
+        },
+      ]"
+      @load-success="mockupLoadSuccess"
+    />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 
 import BatteryIcon from "../icons/Battery.vue";
 import WifiIcon from "../icons/Wifi.vue";
 import IconWrapper from "../icons/IconWrapper.vue";
 import Intersection from "../Intersection.vue";
+import Img from "../Img.vue";
+import Loader from "../Loader.vue";
+import classNames from "../../utils/classNames";
 
 export default defineComponent({
   name: "IPhoneMockup",
@@ -42,11 +64,17 @@ export default defineComponent({
     WifiIcon,
     IconWrapper,
     Intersection,
-  },
+    Img,
+    Loader
+},
   setup() {
     const statusBarIcons = ["WifiIcon", "BatteryIcon"];
 
-    return { statusBarIcons };
+    const mockupLoaded = ref(false);
+
+    const mockupLoadSuccess = () => (mockupLoaded.value = true);
+
+    return { statusBarIcons, mockupLoaded, mockupLoadSuccess, classNames };
   },
 });
 </script>
@@ -69,7 +97,7 @@ export default defineComponent({
   clip-path: inset(0 0 0 0 round var(--corner));
 }
 .frame {
-  @apply h-[calc(100%-19px)] w-[calc(100%-22px)] py-2 px-[9px];
+  @apply h-[calc(100%-19px)] w-[calc(100%-22px)] py-2 px-[9px] relative;
   --corner: 56px;
 }
 
