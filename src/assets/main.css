@@ -78,6 +78,16 @@ textarea {
   font-size: 16px;
 }
 
+.hide-scrollbar {
+  scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  height: 0;
+  width: 0;
+  display: none;
+}
+
 .fill-after-before:after,
 .fill-after-before:before,
 .fill-after:after,
@@ -103,18 +113,16 @@ textarea {
   @apply transition-opacity opacity-0;
 }
 
-@media (pointer: fine) and (hover: hover) {
-  .before-interact:focus::before,
-  .after-interact:focus::after,
-  .pseudo-interact:focus {
-    @apply opacity-[0.15];
-  }
+.before-interact:focus::before,
+.after-interact:focus::after,
+.pseudo-interact:focus {
+  @apply can-hover:opacity-[0.15];
+}
 
-  .before-interact:hover::before,
-  .after-interact:hover::after,
-  .pseudo-interact:hover {
-    @apply opacity-10;
-  }
+.before-interact:hover::before,
+.after-interact:hover::after,
+.pseudo-interact:hover {
+  @apply can-hover:opacity-10;
 }
 
 .before-interact:active::before,
