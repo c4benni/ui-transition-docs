@@ -2,7 +2,7 @@
   <div class="w-full h-full relative max-w-full overflow-hidden">
     <!-- body -->
     <div class="pt-[24px] px-[12px] w-full pointer-events-none">
-      <p :class="['font-bold text-[1.5em]', classNames.headline]">Browse</p>
+      <strong :class="['font-bold text-[1.5em]', classNames.headline]">Browse</strong>
 
       <ul
         class="hide-scrollbar max-w-full w-full grid grid-flow-col grid-cols-[repeat(2,100%)] gap-x-[6px]"
@@ -19,7 +19,7 @@
         />
       </ul>
 
-      <p
+      <strong
         :class="[
             'flex justify-between items-end border-t font-bold pt-[8px]',
             classNames.divideColor
@@ -29,16 +29,16 @@
 
           <span
             :class="[
-            'font-normal text-[0.85em]',
+            'font-normal text-[0.75em]',
                 primaryColor
             ]"
           >
               See All
           </span>
-      </p>
+      </strong>
 
       <ul
-        class="hide-scrollbar max-w-full w-full grid grid-flow-col grid-cols-[repeat(2,calc(50%-4px))] gap-x-[6px]"
+        class="hide-scrollbar max-w-full w-full grid grid-flow-col grid-cols-[repeat(2,calc(50%-3px))] gap-x-[6px]"
       >
         <MiniCard
           v-for="item in secondSection"
