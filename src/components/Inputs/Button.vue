@@ -66,8 +66,12 @@ export default defineComponent({
 
 <style scoped lang="postcss">
 .Button {
-  @apply font-medium outline-none focus-visible:bg-opacity-70 active:scale-[0.95] md:active:scale-[0.985] active:opacity-90 transform-gpu inline-grid justify-center items-center select-none transition-opacity relative grid-flow-col gap-x-[0.5em];
+  @apply font-medium outline-none focus-visible:bg-opacity-70 active:scale-[0.95] md:active:scale-[0.985] active:opacity-90 transform-gpu inline-grid justify-center items-center select-none transition-opacity relative grid-flow-col gap-x-[0.5em] can-hover:hover:bg-opacity-80;
   transition-property: opacity, transform;
+}
+
+.Button:not(.text){
+  @apply can-hover:hover:translate-y-[-2px] can-hover:active:translate-y-0 can-hover:focus:translate-y-0;
 }
 
 .Button.primary:not(.text):not(.icon){
@@ -80,10 +84,6 @@ export default defineComponent({
 
 .Button:not(.icon) {
   @apply focus-visible:ring-1 ring-offset-2 ring-offset-transparent;
-}
-
-.Button {
-  @apply can-hover:hover:bg-opacity-80;
 }
 
 .Button {
