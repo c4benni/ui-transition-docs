@@ -8,7 +8,7 @@
     <Img
       :public-id="src"
       :class="[
-        'h-[124px] w-full rounded-[4px] mt-[8px] object-cover border',
+        'min-h-[124px] h-[124px] w-full rounded-[4px] mt-[8px] object-cover border',
         classNames.divideColor
       ]"
     />
