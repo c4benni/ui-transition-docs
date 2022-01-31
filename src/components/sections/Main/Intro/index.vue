@@ -41,7 +41,7 @@
         class="col-start-1 mx-3 xs:mx-6 md:ml-0 md:mr-12 mt-12"
         @click="theme.dark = !theme.dark"
       >
-        Browse API
+        Get Started
       </Button>
     </div>
 
