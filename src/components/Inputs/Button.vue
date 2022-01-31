@@ -79,7 +79,7 @@ export default defineComponent({
 }
 
 .Button.primary.text{
-    @apply text-primary dark:text-primary-dark;
+    @apply text-primary dark:text-[#9b89f8]
 }
 
 .Button:not(.icon) {
