@@ -17,6 +17,10 @@ module.exports = {
   plugins: [
     plugin(function ({ addVariant }) {
       addVariant("can-hover", ["@media (pointer: fine) and (hover: hover)"]);
+      addVariant("supports-blur", ["@supports (backdrop-filter: blur(1px))"]);
+      addVariant("not-supports-blur", [
+        "@supports not (backdrop-filter: blur(1px))",
+      ]);
     }),
   ],
   important: true,
