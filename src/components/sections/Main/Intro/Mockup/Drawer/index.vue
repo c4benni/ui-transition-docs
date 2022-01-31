@@ -29,8 +29,14 @@
       </p>
 
       <div class="grid grid-flow-col gap-x-[8px] text-[1.2em]">
-        <IconWrapper v-for="icon in collapsedIcons" :key="icon">
-          <Component :is="icon" />
+        <IconWrapper 
+            v-for="icon in collapsedIcons" 
+            :key="icon.title"
+            :tag="icon.onClick ? 'button' : 'span'"
+            tabindex="-1"
+            @click="icon.onClick"
+        >
+          <Component :is="icon.title" />
         </IconWrapper>
       </div>
     </div>
@@ -42,6 +48,8 @@
         :class-names="classNames"
         :title="title"
         :primary-color="primaryColor"
+        :playing="playing"
+        @is-playing="e => playing = e"
     />
 
     <!-- after enter show close icon -->
@@ -61,10 +69,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { computed, defineComponent, ref } from "vue";
 import Img from "../../../../../Img.vue";
 import IconWrapper from "../../../../../icons/IconWrapper.vue";
 import PlayIcon from "../../../../../icons/Play.vue";
+import PauseIcon from "../../../../../icons/Paused.vue";
 import Forward from "../../../../../icons/Forward.vue";
 import CloseFilled from "../../../../../icons/CloseFilled.vue";
 import Content from "./Content.vue";
@@ -72,7 +81,8 @@ import { requiredProp, requiredStringProp } from "../../../../../../utils/main";
 
 export default defineComponent({
   name: "Drawer",
-  components: { Img, IconWrapper, PlayIcon, Forward, CloseFilled, Content },
+  components: { Img, IconWrapper, PlayIcon, 
+  Forward, CloseFilled, Content, PauseIcon },
   emits:['toggle-expand'],
 
   props:{
@@ -82,13 +92,24 @@ export default defineComponent({
   },
 
   setup() {
+      const playing = ref(false);
+
     const title = "The Move to End Congressional Stock trading";
 
-    const collapsedIcons = ["PlayIcon", "Forward"];
+    const collapsedIcons = computed(()=> [{
+        title: playing.value ? "PauseIcon": "PlayIcon",
+        onClick: (e: Event)=> {
+            e.stopPropagation();
+
+            playing.value = !playing.value
+        }
+    }, {
+        title: "Forward"
+    }]);
 
     const artwork = 'intro-mockup/podcast/daily-show_y01a50.jpg'
 
-    return { title, collapsedIcons, artwork };
+    return { title, collapsedIcons, artwork, playing };
   },
 });
 </script>
