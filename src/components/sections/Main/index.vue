@@ -14,6 +14,7 @@
         >
             <Intro/>
             <Features/>
+            <Customizable/>
         </div>
     </main>
 </template>
@@ -23,6 +24,7 @@ import { defineComponent } from 'vue'
 import classNames from '../../../utils/classNames'
 import Intro from './Intro/index.vue'
 import Features from './Features/index.vue';
+import Customizable from './Customizable/index.vue';
 
 export default defineComponent({
     name: "Main",
@@ -31,6 +33,6 @@ export default defineComponent({
             classNames
         };
     },
-    components: { Intro, Features }
+    components: { Intro, Features, Customizable }
 })
 </script>
