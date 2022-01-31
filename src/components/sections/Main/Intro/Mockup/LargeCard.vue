@@ -5,24 +5,24 @@
       classNames.divideColor,
     ]"
   >
-    <p :class="['uppercase text-[0.55em] truncate', primaryColor]">
+    <p :class="['uppercase text-[0.55em] truncate font-medium', primaryColor]">
       {{ badge }}
     </p>
 
-    <p :class="['truncate max-w-full', classNames.headline]">
+    <p :class="['truncate max-w-full font-medium', classNames.headline]">
       {{ title }}
     </p>
 
     <!-- subtitle -->
 
-    <p :class="['truncate max-w-full h-[18px] opacity-80 dark:opacity-95', classNames.paragraph]">
+    <p :class="['truncate max-w-full h-[18px] leading-none opacity-80 dark:opacity-95', classNames.paragraph]">
       {{ subtitle || "" }}
     </p>
 
     <Img
       :public-id="src"
       :class="[
-        'h-[144px] w-full rounded-[4px] mt-[8px] object-cover border',
+        'min-h-[144px] h-[144px] w-full rounded-[4px] mt-[8px] object-cover border',
         classNames.divideColor
       ]"
     />
