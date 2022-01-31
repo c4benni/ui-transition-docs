@@ -27,3 +27,11 @@ export const undefinedProp = (type: any | any[]) => ({
   type,
   default: undefined,
 });
+
+export const requiredProp = (type: any | any[]) => ({
+  type,
+  required: true,
+});
+
+export const undefinedStringProp = undefinedProp(String);
+export const requiredStringProp = requiredProp(String);
