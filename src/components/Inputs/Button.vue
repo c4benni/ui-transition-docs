@@ -1,93 +1,125 @@
-<template>
-  
-</template>
+<template></template>
 
 <script lang="ts">
 import { computed, defineComponent, h, PropType } from "@vue/runtime-core";
 import classNames from "../../utils/classNames";
 
-type Size = 'sm'|'md'|'lg'
+type Size = "sm" | "md" | "lg";
 
 export default defineComponent({
-    name:'Button',
+  name: "Button",
 
-    props:{
-        icon:Boolean,
-        tag: {
-            type:String,
-            default: 'button'
-        },
-        href: {
-            type: String,
-            default:undefined
-        },
-        size:{
-            type:String as PropType<Size>,
-            default: 'md'
-        }
+  props: {
+    text: Boolean,
+    icon: Boolean,
+    primary: {
+      type: Boolean,
+      default: true,
     },
+    tag: {
+      type: String,
+      default: "button",
+    },
+    href: {
+      type: String,
+      default: undefined,
+    },
+    size: {
+      type: String as PropType<Size>,
+      default: "md",
+    },
+  },
 
-    setup(p,{slots, attrs}){
+  setup(p, { slots, attrs }) {
+    const props = computed(() => p);
 
-        const props = computed(()=>p);
+    const getTag = computed(() => {
+      if (props.value.href) {
+        return "a";
+      }
+      return props.value.tag;
+    });
 
-        const getTag = computed(()=>{
-            if(props.value.href){
-                return 'a'
-            }
-            return props.value.tag
-        });        
-
-        return function(){
-            return h(getTag.value,{
-                ...attrs,
-                role: 'button',
-                class: [
-                    'Button',
-                    props.value.size,
-                    {
-                        [`${classNames.headline} icon fill-before before:bg-current before-interact`]: props.value.icon
-                    }
-                ],
-            },[
-                slots.default?.()
-            ])
-        }
-    }
-})
+    return function () {
+      return h(
+        getTag.value,
+        {
+          ...attrs,
+          role: "button",
+          class: [
+            "Button",
+            props.value.size,
+            {
+              primary: props.value.primary,
+              text: props.value.text,
+              [`${classNames.headline} icon fill-before before:bg-current before-interact`]:
+                props.value.icon,
+            },
+          ],
+        },
+        [slots.default?.()]
+      );
+    };
+  },
+});
 </script>
 
 <style scoped lang="postcss">
-.Button{
-    @apply bg-primary dark:bg-primary-dark text-primary-text dark:text-primary-text-dark font-medium outline-none focus-visible:bg-opacity-70 active:scale-[0.95] md:active:scale-[0.985] active:opacity-90 transform-gpu inline-grid justify-center items-center select-none transition-opacity relative;
-    transition-property: opacity, transform;
+.Button {
+  @apply font-medium outline-none focus-visible:bg-opacity-70 active:scale-[0.95] md:active:scale-[0.985] active:opacity-90 transform-gpu inline-grid justify-center items-center select-none transition-opacity relative grid-flow-col gap-x-[0.5em];
+  transition-property: opacity, transform;
 }
 
-.Button:not(.icon){
-    @apply focus-visible:ring-1 ring-offset-2 ring-offset-transparent;
+.Button.primary:not(.text):not(.icon){
+    @apply bg-primary dark:bg-primary-dark text-primary-text dark:text-primary-text-dark
 }
 
- .Button{
-    @apply can-hover:hover:bg-opacity-80
+.Button.primary.text{
+    @apply text-primary dark:text-primary-dark;
 }
 
-.Button{
-    @apply active:bg-opacity-60
+.Button:not(.icon) {
+  @apply focus-visible:ring-1 ring-offset-2 ring-offset-transparent;
 }
 
-.Button.sm{
-    @apply px-3 h-[36px] rounded-sm text-[0.95rem];
-    clip-path: inset(0 0 0 0 round 4px);
+.Button {
+  @apply can-hover:hover:bg-opacity-80;
 }
 
-.Button.md{
-    @apply px-4 h-[44px] rounded-md text-[1.05rem];
-    clip-path: inset(0 0 0 0 round 8px);
+.Button {
+  @apply active:bg-opacity-60;
 }
 
-.Button.lg{
-    @apply px-6 h-[56px] rounded-lg text-[1.25rem];
-    clip-path: inset(0 0 0 0 round 12px);
+.Button.sm {
+  @apply px-3 h-[36px] rounded-sm text-[0.95rem];
+  clip-path: inset(0 0 0 0 round 4px);
+}
+
+.Button.text.sm{
+    @apply text-sm
+}
+
+.Button.md {
+  @apply px-4 h-[44px] rounded-md text-[1.05rem];
+  clip-path: inset(0 0 0 0 round 8px);
+}
+
+.Button.text.sm{
+    @apply text-base
+}
+
+.Button.lg {
+  @apply px-6 h-[56px] rounded-lg text-[1.25rem];
+  clip-path: inset(0 0 0 0 round 12px);
+}
+
+.Button.text.sm{
+    @apply text-lg
+}
+
+.Button.text{
+    @apply h-fit px-0 rounded-none can-hover:hover:opacity-80 active:opacity-70 w-fit;
+    clip-path: none;
 }
 
 .Button.icon {
