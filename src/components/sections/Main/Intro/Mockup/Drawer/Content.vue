@@ -55,7 +55,7 @@
         v-for="action in actionIcons"
         :key="action.icon"
         :tag="action.onClick ? 'button' : 'span'"
-        tabindex="-1"
+        :tabindex="action.onClick ? '-1' : undefined"
         :class="[
           {
             'text-[2em] opacity-90': !action.onClick,
