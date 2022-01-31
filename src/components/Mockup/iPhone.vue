@@ -1,6 +1,11 @@
-<template>
-  <div role="presentation" aria-hidden="true" class="Mockup">
-    <Intersection #default="{ isIntersecting }">
+ <template>
+  <Intersection
+    :config="{
+      rootMargin: '72px 0px',
+    }"
+    #default="{ isIntersecting }"
+  >
+    <div role="presentation" aria-hidden="true" class="Mockup">
       <div class="frame">
         <div v-if="isIntersecting && mockupLoaded" class="screen">
           <div class="status-bar">
@@ -32,17 +37,15 @@
           <Loader class="text-5xl" />
         </div>
       </div>
-    </Intersection>
 
-    <Img
-      public-id="mockup/iphone_large_2x_pw8fnw.png"
-      loading-background="bg-transparent"
-      :class="[
-        'image'
-      ]"
-      @load-success="mockupLoadSuccess"
-    />
-  </div>
+      <Img
+        public-id="mockup/iphone_large_2x_pw8fnw.png"
+        loading-background="bg-transparent"
+        :class="['image']"
+        @load-success="mockupLoadSuccess"
+      />
+    </div>
+  </Intersection>
 </template>
 
 <script lang="ts">
@@ -101,7 +104,7 @@ export default defineComponent({
 }
 
 .screen {
-  @apply h-full w-full bg-surface dark:bg-[#0e0e0e] max-w-full;
+  @apply h-full w-full bg-surface dark:bg-[#0b0b0b] max-w-full;
   --corner: 32px;
 }
 
