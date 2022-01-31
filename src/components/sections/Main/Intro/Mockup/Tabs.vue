@@ -1,7 +1,7 @@
 <template>
   <ul
     :class="[
-      'h-[64px] absolute bottom-0 w-full border-t-[0.75px] flex justify-around bg-white dark:bg-surface-dark pb-[16px]  border-t-gray-200 dark:border-t-gray-800',
+      'h-[64px] absolute bottom-0 w-full border-t-[0.75px] flex justify-around bg-white dark:bg-surface-dark pb-[16px]  border-t-gray-200 dark:border-t-gray-800 px-[12px] pointer-events-none',
       'transform-gpu transition-transform',
       {
         'translate-y-[100%]':expanded
