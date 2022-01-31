@@ -22,24 +22,23 @@
           </div>
         </div>
 
-        <div 
+        <div
           v-if="!mockupLoaded"
-        :class="[
-          'screen grid justify-center items-center border',
-          classNames.divideColor
-        ]">
-          <Loader class="text-5xl"/>
+          :class="[
+            'screen grid justify-center items-center border',
+            classNames.divideColor,
+          ]"
+        >
+          <Loader class="text-5xl" />
         </div>
       </div>
     </Intersection>
 
     <Img
       public-id="mockup/iphone_large_2x_pw8fnw.png"
+      loading-background="bg-transparent"
       :class="[
-        'image',
-        {
-          invisible: !mockupLoaded,
-        },
+        'image'
       ]"
       @load-success="mockupLoadSuccess"
     />
@@ -65,8 +64,8 @@ export default defineComponent({
     IconWrapper,
     Intersection,
     Img,
-    Loader
-},
+    Loader,
+  },
   setup() {
     const statusBarIcons = ["WifiIcon", "BatteryIcon"];
 
@@ -97,12 +96,12 @@ export default defineComponent({
   clip-path: inset(0 0 0 0 round var(--corner));
 }
 .frame {
-  @apply h-[calc(100%-19px)] w-[calc(100%-22px)] py-2 px-[9px] relative;
+  @apply h-[calc(100%-19px)] w-[calc(100%-22px)] py-2 px-[9px] relative max-w-full;
   --corner: 56px;
 }
 
 .screen {
-  @apply h-full w-full bg-surface dark:bg-[#0e0e0e];
+  @apply h-full w-full bg-surface dark:bg-[#0e0e0e] max-w-full;
   --corner: 32px;
 }
 
@@ -111,6 +110,6 @@ export default defineComponent({
 }
 
 .content {
-  @apply pointer-events-auto h-[calc(100%-24px)] w-full grid justify-items-center items-start relative;
+  @apply pointer-events-auto h-[calc(100%-24px)] w-full grid justify-items-center items-start relative max-w-full;
 }
 </style>
