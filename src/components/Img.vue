@@ -1,12 +1,5 @@
 <script lang="ts">
-import {
-  computed,
-  defineComponent,
-  h,
-  onBeforeMount,
-  ref,
-  watch,
-} from "vue";
+import { computed, defineComponent, h, onBeforeMount, ref, watch } from "vue";
 import { undefinedProp } from "../utils/main";
 import { Cloudinary } from "cloudinary-core";
 import Intersection from "./Intersection.vue";
@@ -19,7 +12,7 @@ const stringOrNumberProp = undefinedProp([Number, String]);
 let mounted = false;
 
 // store loaded src as object for faster lookup
-const loadedSrc: DynamicObject<number> = {}
+const loadedSrc: DynamicObject<number> = {};
 
 export default defineComponent({
   emits: ["load-start", "load-success", "load-error"],
@@ -39,9 +32,9 @@ export default defineComponent({
     const props = computed(() => p);
     const loaded = ref(false);
 
-    onBeforeMount(()=>{
+    onBeforeMount(() => {
       mounted = true;
-    })
+    });
 
     const intersected = ref(false);
 
@@ -72,22 +65,21 @@ export default defineComponent({
       const img = new Image();
 
       const toggleLoaded = (val: boolean) => {
-        img.onerror = null;
-
-        img.onload = null;
-
         loaded.value = val;
       };
 
-      img.onload = () => {
-        toggleLoaded(true);
-      };
-
-      img.onerror = () => {
-        toggleLoaded(false);
-      };
+      img.decoding = "async";
 
       img.src = getSrc.value;
+
+      img
+        .decode()
+        .then(() => {
+          toggleLoaded(true);
+        })
+        .catch(() => {
+          toggleLoaded(false);
+        });
     };
 
     watch(
@@ -107,7 +99,7 @@ export default defineComponent({
     );
 
     return () => {
-      if (mounted && (loadedSrc[getSrc.value]|| loaded.value)) {
+      if (mounted && (loadedSrc[getSrc.value] || loaded.value)) {
         return h("img", {
           ...attrs,
           src: getSrc.value,
@@ -130,9 +122,9 @@ export default defineComponent({
         Intersection,
         {
           disabled: intersected.value,
-          config:{
-            rootMargin: '72px 0px'
-          }
+          config: {
+            rootMargin: "72px 0px",
+          },
         },
         {
           default: ({
@@ -144,16 +136,19 @@ export default defineComponent({
           }) => {
             !inactive && (intersected.value = isIntersecting);
 
-            return h("picture", {
+            return h("div", {
               ...attrs,
-              title: props.value.alt,
+              "aria-label": props.value.alt,
+              title: "loading image",
               class: [
-                'inline-block',
+                "inline-block pointer-events-none", 
                 props.value.loadingBackground
               ],
               style: {
-                height: `${props.value.height}px`,
-                width: `${props.value.width}px`,
+                height: props.value.height
+                  ? `${props.value.height}px`
+                  : undefined,
+                width: props.value.width ? `${props.value.width}px` : undefined,
               },
             });
           },
