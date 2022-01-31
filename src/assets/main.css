@@ -49,6 +49,7 @@ body {
 
 ::-webkit-scrollbar-thumb {
   background-color: #f8f8f836;
+  border-radius: calc(var(--scrollbar-width) / 2);
 }
 
 .light::-webkit-scrollbar-thumb,
@@ -58,7 +59,6 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background-color: rgba(255, 255, 255, 0.637);
-  border-radius: calc(var(--scrollbar-width) / 2);
 }
 
 .light::-webkit-scrollbar-thumb:hover,
