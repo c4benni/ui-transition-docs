@@ -10,12 +10,16 @@ import {
 import { undefinedProp } from "../utils/main";
 import { Cloudinary } from "cloudinary-core";
 import Intersection from "./Intersection.vue";
+import { DynamicObject } from "../types";
 
 const cl = new Cloudinary({ cloud_name: "c4benn", secure: true });
 
 const stringOrNumberProp = undefinedProp([Number, String]);
 
 let mounted = false;
+
+// store loaded src as object for faster lookup
+const loadedSrc: DynamicObject<number> = {}
 
 export default defineComponent({
   emits: ["load-start", "load-success", "load-error"],
@@ -103,7 +107,7 @@ export default defineComponent({
     );
 
     return () => {
-      if (loaded.value && mounted) {
+      if (mounted && (loadedSrc[getSrc.value]|| loaded.value)) {
         return h("img", {
           ...attrs,
           src: getSrc.value,
@@ -115,6 +119,7 @@ export default defineComponent({
           "data-src-cache": props.value.publicId ? getSrc.value : undefined,
           onLoad: () => {
             requestAnimationFrame(() => emit("load-success"));
+            loadedSrc[getSrc.value] = 1;
           },
           onError: () => {
             emit("load-error");
@@ -125,6 +130,9 @@ export default defineComponent({
         Intersection,
         {
           disabled: intersected.value,
+          config:{
+            rootMargin: '72px 0px'
+          }
         },
         {
           default: ({
@@ -139,7 +147,10 @@ export default defineComponent({
             return h("picture", {
               ...attrs,
               title: props.value.alt,
-              class: props.value.loadingBackground,
+              class: [
+                'inline-block',
+                props.value.loadingBackground
+              ],
               style: {
                 height: `${props.value.height}px`,
                 width: `${props.value.width}px`,
