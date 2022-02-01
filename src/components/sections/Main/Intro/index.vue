@@ -2,9 +2,7 @@
   <section
     class="mt-6 xs:mt-12 sm:mt-12 grid md:grid-cols-[1fr,400px] md:gap-x-3 lg:gap-x-6"
   >
-    <div
-      class="grid md:grid-rows-[164px,140px,auto] items-start"
-    >
+    <div class="grid md:grid-rows-[164px,140px,auto] items-start">
       <h2
         :class="[
           'font-extrabold text-3xl xs:text-4xl sm:text-5xl leading-normal xs:leading-normal sm:leading-normal mb-6 md:mb-3 col-start-1 justify-self-center md:justify-self-start',
@@ -49,21 +47,15 @@
       v-if="!breakpoint.isMobile"
       class="col-start-2 row-start-1 w-[312px] -mt-12 justify-self-end mr-2 grid gap-y-5 justify-items-center"
     >
-      <Mockup
-      class="h-[calc(100vh-56px)] max-h-[600px] w-full"
-    />
+      <Mockup class="h-[calc(100vh-56px)] max-h-[600px] w-full" />
 
-    <Button
-      text
-    >
-      Source code
+      <Button text>
+        Source code
 
-      <IconWrapper
-        class="text-[0.9em] mb-[-2px]"
-      >
-        <Code/>
-      </IconWrapper>
-    </Button>
+        <IconWrapper class="text-[0.9em] mb-[-2px]">
+          <Code />
+        </IconWrapper>
+      </Button>
     </div>
   </section>
 </template>
@@ -80,6 +72,8 @@ import Code from "../../../icons/Code.vue";
 
 export default defineComponent({
   name: "Intro",
+  components: { Button, Mockup, IconWrapper, Code },
+
   setup() {
     const theme = computed(() => useTheme.value);
     const breakpoint = computed(() => useBreakpoint().value);
@@ -92,6 +86,5 @@ export default defineComponent({
       centerHeadlines,
     };
   },
-  components: { Button, Mockup, IconWrapper, Code },
 });
 </script>
