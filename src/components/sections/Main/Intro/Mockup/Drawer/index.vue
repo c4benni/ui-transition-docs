@@ -6,16 +6,17 @@
       classNames.divideColor,
       {
         'translate-y-[calc(100%-96px)]': !expanded,
-        'rounded-t-[16px] translate-y-[16px] shadow-t': expanded
-      }
+        'rounded-t-[16px] translate-y-[16px] shadow-t': expanded,
+      },
     ]"
   >
-    <div :class="[
-      'flex justify-between items-center h-[48px] px-[12px] pointer-events-auto',
-      {
-        invisible: expanded
-      }
-    ]"
+    <div
+      :class="[
+        'flex justify-between items-center h-[48px] px-[12px] pointer-events-auto',
+        {
+          invisible: expanded,
+        },
+      ]"
       @click="$emit('toggle-expand', true)"
     >
       <Img
@@ -29,12 +30,12 @@
       </p>
 
       <div class="grid grid-flow-col gap-x-[8px] text-[1.2em]">
-        <IconWrapper 
-            v-for="icon in collapsedIcons" 
-            :key="icon.title"
-            :tag="icon.onClick ? 'button' : 'span'"
-            tabindex="-1"
-            @click="icon.onClick"
+        <IconWrapper
+          v-for="icon in collapsedIcons"
+          :key="icon.title"
+          :tag="icon.onClick ? 'button' : 'span'"
+          tabindex="-1"
+          @click="icon.onClick"
         >
           <Component :is="icon.title" />
         </IconWrapper>
@@ -43,13 +44,13 @@
 
     <!-- drawer content -->
     <Content
-        :src="artwork"
-        :expanded="expanded"
-        :class-names="classNames"
-        :title="title"
-        :primary-color="primaryColor"
-        :playing="playing"
-        @is-playing="e => playing = e"
+      :src="artwork"
+      :expanded="expanded"
+      :class-names="classNames"
+      :title="title"
+      :primary-color="primaryColor"
+      :playing="state.playing"
+      @is-playing="(e) => (state.playing = e)"
     />
 
     <!-- after enter show close icon -->
@@ -59,11 +60,11 @@
       tabindex="-1"
       :class="[
         'text-[1.25em] absolute top-[6px] right-[10px] pointer-events-auto',
-        classNames.paragraph
+        classNames.paragraph,
       ]"
       @click="$emit('toggle-expand', false)"
     >
-      <CloseFilled/>
+      <CloseFilled />
     </IconWrapper>
   </div>
 </template>
@@ -78,38 +79,47 @@ import Forward from "../../../../../icons/Forward.vue";
 import CloseFilled from "../../../../../icons/CloseFilled.vue";
 import Content from "./Content.vue";
 import { requiredProp, requiredStringProp } from "../../../../../../utils/main";
+import state from "./state";
 
 export default defineComponent({
   name: "Drawer",
-  components: { Img, IconWrapper, PlayIcon, 
-  Forward, CloseFilled, Content, PauseIcon },
-  emits:['toggle-expand'],
+  components: {
+    Img,
+    IconWrapper,
+    PlayIcon,
+    Forward,
+    CloseFilled,
+    Content,
+    PauseIcon,
+  },
+  emits: ["toggle-expand"],
 
-  props:{
-    expanded:Boolean,
+  props: {
+    expanded: Boolean,
     classNames: requiredProp(Object),
-    primaryColor: requiredStringProp
+    primaryColor: requiredStringProp,
   },
 
   setup() {
-      const playing = ref(false);
-
     const title = "The Move to End Congressional Stock trading";
 
-    const collapsedIcons = computed(()=> [{
-        title: playing.value ? "PauseIcon": "PlayIcon",
-        onClick: (e: Event)=> {
-            e.stopPropagation();
+    const collapsedIcons = computed(() => [
+      {
+        title: state.value.playing ? "PauseIcon" : "PlayIcon",
+        onClick: (e: Event) => {
+          e.stopPropagation();
 
-            playing.value = !playing.value
-        }
-    }, {
-        title: "Forward"
-    }]);
+          state.value.playing = !state.value.playing;
+        },
+      },
+      {
+        title: "Forward",
+      },
+    ]);
 
-    const artwork = 'intro-mockup/podcast/daily-show_y01a50.jpg'
+    const artwork = "intro-mockup/podcast/daily-show_y01a50.jpg";
 
-    return { title, collapsedIcons, artwork, playing };
+    return { title, collapsedIcons, artwork, state };
   },
 });
 </script>
