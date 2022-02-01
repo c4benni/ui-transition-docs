@@ -70,20 +70,24 @@ export default defineComponent({
   transition-property: opacity, transform;
 }
 
-.Button:not(.text){
+.Button:focus-visible {
+  clip-path: none !important;
+}
+
+.Button:not(.text) {
   @apply can-hover:hover:translate-y-[-2px] can-hover:active:translate-y-0 can-hover:focus:translate-y-0;
 }
 
-.Button.primary:not(.text):not(.icon){
-    @apply bg-primary dark:bg-primary-dark text-primary-text dark:text-primary-text-dark
+.Button.primary:not(.text):not(.icon) {
+  @apply bg-primary dark:bg-primary-dark text-primary-text dark:text-primary-text-dark;
 }
 
-.Button.primary.text{
-    @apply text-primary dark:text-[#9b89f8]
+.Button.primary.text {
+  @apply text-primary dark:text-[hsl(250,85%,70%)];
 }
 
 .Button:not(.icon) {
-  @apply focus-visible:ring-1 ring-offset-2 ring-offset-transparent;
+  @apply focus-visible:ring-1 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent;
 }
 
 .Button {
@@ -95,8 +99,8 @@ export default defineComponent({
   clip-path: inset(0 0 0 0 round 4px);
 }
 
-.Button.text.sm{
-    @apply text-sm
+.Button.text.sm {
+  @apply text-sm;
 }
 
 .Button.md {
@@ -104,8 +108,8 @@ export default defineComponent({
   clip-path: inset(0 0 0 0 round 8px);
 }
 
-.Button.text.sm{
-    @apply text-base
+.Button.text.sm {
+  @apply text-base;
 }
 
 .Button.lg {
@@ -113,13 +117,13 @@ export default defineComponent({
   clip-path: inset(0 0 0 0 round 12px);
 }
 
-.Button.text.sm{
-    @apply text-lg
+.Button.text.sm {
+  @apply text-lg;
 }
 
-.Button.text{
-    @apply h-fit px-0 rounded-none can-hover:hover:opacity-80 active:opacity-70 w-fit;
-    clip-path: none;
+.Button.text {
+  @apply h-fit px-0 rounded-none can-hover:hover:opacity-80 active:opacity-70 w-fit;
+  clip-path: none;
 }
 
 .Button.icon {
