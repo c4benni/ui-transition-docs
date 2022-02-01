@@ -15,7 +15,7 @@ let mounted = false;
 const loadedSrc: DynamicObject<number> = {};
 
 export default defineComponent({
-  emits: ["load-start", "load-success", "load-error"],
+  emits: ["animationend", "load-start", "load-success", "load-error"],
   props: {
     publicId: undefinedProp(String),
     src: undefinedProp(String),
@@ -109,9 +109,13 @@ export default defineComponent({
           decoding: "async",
           crossorigin: "anonymous",
           "data-src-cache": props.value.publicId ? getSrc.value : undefined,
+          class: [{ "fade-appear": !loadedSrc[getSrc.value] }],
+          onAnimationend: (e: AnimationEvent) => {
+            emit("animationend", e);
+            loadedSrc[getSrc.value] = 1;
+          },
           onLoad: () => {
             requestAnimationFrame(() => emit("load-success"));
-            loadedSrc[getSrc.value] = 1;
           },
           onError: () => {
             emit("load-error");
@@ -141,8 +145,8 @@ export default defineComponent({
               "aria-label": props.value.alt,
               title: "loading image",
               class: [
-                "inline-block pointer-events-none", 
-                props.value.loadingBackground
+                "inline-block pointer-events-none",
+                props.value.loadingBackground,
               ],
               style: {
                 height: props.value.height
