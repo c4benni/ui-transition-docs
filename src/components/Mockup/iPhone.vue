@@ -104,7 +104,7 @@ export default defineComponent({
 }
 
 .screen {
-  @apply h-full w-full bg-surface dark:bg-[#0b0b0b] max-w-full;
+  @apply h-full w-full bg-surface dark:bg-[#000] max-w-full;
   --corner: 32px;
 }
 
