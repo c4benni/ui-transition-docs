@@ -59,15 +59,15 @@
       <Drawer
         :class-names="classNames"
         :primary-color="primaryColor"
-        :expanded="expanded"
-        @toggle-expand="e => expanded = e"
+        :expanded="state.expanded"
+        @toggle-expand="e => state.expanded = e"
       />
 
       <!-- tabs -->
       <Tabs
         :class-names="classNames"
         :primary-color="primaryColor"
-        :expanded="expanded"
+        :expanded="state.expanded"
       />
     </div>
   </div>
@@ -80,6 +80,7 @@ import LargeCard from "./LargeCard.vue";
 import MiniCard from "./MiniCard.vue";
 import Tabs from "./Tabs.vue";
 import Drawer from "./Drawer/index.vue";
+import state from "./Drawer/state";
 
 export default defineComponent({
   name: "MockupContent",
@@ -92,8 +93,6 @@ export default defineComponent({
 
   setup() {
     const primaryColor = "text-blue-700 dark:text-blue-500";
-
-    const expanded = ref(false);
 
     const firstSection = [
       {
@@ -134,7 +133,7 @@ export default defineComponent({
       classNames,
       firstSection,
       secondSection,
-      expanded
+      state
     };
   },
 });
