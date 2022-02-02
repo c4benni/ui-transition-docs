@@ -33,11 +33,10 @@ export default defineComponent({
   width: 1em;
 }
 
-.IconWrapper > svg {
+.IconWrapper > :deep(svg) {
   height: 1em;
   width: 1em;
   fill: currentColor;
   position: absolute;
-  bottom: -0.125em;
 }
 </style>
