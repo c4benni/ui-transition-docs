@@ -1,5 +1,7 @@
 <template>
-  <div class="grid md:grid-flow-col md:gap-x-6 pt-6 md:pt-12">
+  <div
+    class="grid md:grid-flow-col md:gap-x-6 pt-6 md:pt-12 w-full md:grid-cols-[400px,1fr]"
+  >
     <Mockup
       v-if="!breakpoint.isMobile"
       class="h-[calc(100vh-56px)] max-h-[600px] w-[312px]"
@@ -7,12 +9,9 @@
       <Visuals />
     </Mockup>
 
-    <div>
-      <CodeSnippet
-        :code="'console.log(`hello`);\n~2console.log(4)'"
-        max-height="fit-content"
-      />
-    </div>
+    <Snippet>
+      <Visuals v-if="breakpoint.isMobile" />
+    </Snippet>
   </div>
 </template>
 
@@ -21,10 +20,11 @@ import { defineComponent } from "vue";
 import useBreakpoint from "../../../../../hooks/useBreakpoints";
 import Mockup from "./Mockup.vue";
 import Visuals from "./Visuals/index.vue";
-import CodeSnippet from "../../../../CodeSnippet/index.vue";
+import Snippet from "./Snippet/index.vue";
 
 export default defineComponent({
   name: "CustomizablePlayground",
+  components: { Mockup, Visuals, Snippet },
   setup() {
     const breakpoint = useBreakpoint();
 
@@ -32,6 +32,5 @@ export default defineComponent({
       breakpoint,
     };
   },
-  components: { Mockup, Visuals, CodeSnippet },
 });
 </script>
