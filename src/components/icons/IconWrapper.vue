@@ -28,6 +28,8 @@ export default defineComponent({
 .IconWrapper {
   display: inline-flex;
   align-self: center;
+  justify-content: center;
+  align-items: center;
   position: relative;
   height: 1em;
   width: 1em;
