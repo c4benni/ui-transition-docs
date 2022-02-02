@@ -1,10 +1,10 @@
 <template>
   <div
     :class="[
-      'w-full overflow-hidden',
+      'w-full overflow-hidden relative',
       {
         'h-full': !breakpoint.isMobile,
-        [`h-[min(320px,70vh)] mt-2 mb-9 rounded-lg border ${classNames.divideColor}`]:
+        [`h-[min(320px,85vh)] xxs:landscape:h-[min(320px,85vh)] xs:h-[min(320px,70vh)] max-w-[424px] mx-auto mt-2 mb-9 rounded-lg border ${classNames.divideColor}`]:
           breakpoint.isMobile,
       },
     ]"
