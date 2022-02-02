@@ -30,11 +30,20 @@
         <div
           v-if="!mockupLoaded"
           :class="[
-            'screen grid justify-center items-center border',
+            'screen grid justify-center justify-items-center gap-y-2 items-center content-center border group pointer-events-auto',
             classNames.divideColor,
           ]"
         >
           <Loader class="text-5xl" />
+
+          <p
+            :class="[
+              'opacity-0 group-hover:opacity-100 transition-opacity duration-300 group-hover:duration-[600ms] group-hover:ease-linear',
+              classNames.headline
+            ]"
+          >
+            Starting up
+          </p>
         </div>
       </div>
 
