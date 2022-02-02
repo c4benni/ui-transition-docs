@@ -55,51 +55,17 @@ export default defineComponent({
       return src;
     });
 
-    const loadImage = () => {
-      if (!intersected.value) return;
-
-      loaded.value = false;
-
-      emit("load-start");
-
-      const img = new Image();
-
-      const toggleLoaded = (val: boolean) => {
-        loaded.value = val;
-      };
-
-      img.decoding = "async";
-
-      img.src = getSrc.value;
-
-      img
-        .decode()
-        .then(() => {
-          toggleLoaded(true);
-        })
-        .catch(() => {
-          toggleLoaded(false);
-        });
-    };
-
     watch(
       () => getSrc.value,
-      () => {
-        intersected.value = false;
-
-        loadImage();
-      }
-    );
-
-    watch(
-      () => intersected.value,
       (n) => {
-        n && loadImage();
+        if (!n) return;
+
+        intersected.value = false;
       }
     );
 
     return () => {
-      if (mounted && (loadedSrc[getSrc.value] || loaded.value)) {
+      if (mounted && (loadedSrc[getSrc.value] || intersected.value)) {
         return h("img", {
           ...attrs,
           src: getSrc.value,
@@ -109,12 +75,23 @@ export default defineComponent({
           decoding: "async",
           crossorigin: "anonymous",
           "data-src-cache": props.value.publicId ? getSrc.value : undefined,
-          class: [{ "fade-appear": !loadedSrc[getSrc.value] }],
+          class: [
+            { "fade-appear": !loadedSrc[getSrc.value] },
+            {
+              [props.value.loadingBackground]: !loaded.value,
+            },
+          ],
           onAnimationend: (e: AnimationEvent) => {
             emit("animationend", e);
             loadedSrc[getSrc.value] = 1;
           },
+          onLoadstart: () => {
+            emit("load-start");
+
+            loaded.value = false;
+          },
           onLoad: () => {
+            loaded.value = true;
             requestAnimationFrame(() => emit("load-success"));
           },
           onError: () => {
