@@ -1,6 +1,5 @@
 <script lang="ts">
 import {
-  inject,
   nextTick,
   onActivated,
   onBeforeUnmount,
@@ -25,7 +24,7 @@ interface IntersectionConfig {
   root?: HTMLElement | null;
 }
 
-interface Entry extends IntersectionObserverEntry {
+export interface Entry extends IntersectionObserverEntry {
   inactive?: boolean;
 }
 
@@ -112,7 +111,7 @@ export default defineComponent({
     const methods = {
       async connect() {
         const elem = el.value;
-        
+
         if (
           observer.class ||
           props.disabled ||
@@ -158,7 +157,7 @@ export default defineComponent({
         data.entry = {} as Entry;
         await nextTick();
 
-        this.connect();        
+        this.connect();
       },
       disconnect() {
         const elem = el.value;
@@ -195,14 +194,11 @@ export default defineComponent({
       return {
         isIntersecting: data.isIntersecting,
         intersectionRatio: entry.intersectionRatio,
-        entry: {
-          boundingClientRect: entry.boundingClientRect,
-          intersectionRatio: entry.intersectionRatio,
-          intersectionRect: entry.intersectionRect,
-          isIntersecting: entry.isIntersecting,
-          rootBounds: entry.rootBounds,
-          //   time: entry.time,
-        },
+        boundingClientRect: entry.boundingClientRect,
+        intersectionRect: entry.intersectionRect,
+        rootBounds: entry.rootBounds,
+        target: entry.target,
+        //   time: entry.time,
       };
     });
 
