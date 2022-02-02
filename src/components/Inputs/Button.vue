@@ -45,7 +45,7 @@ export default defineComponent({
         getTag.value,
         {
           ...attrs,
-          role: "button",
+          role: getTag.value === 'button' ? undefined : "button",
           class: [
             "Button",
             props.value.size,
@@ -75,7 +75,7 @@ export default defineComponent({
 }
 
 .Button:not(.text) {
-  @apply can-hover:hover:translate-y-[-2px] can-hover:active:translate-y-0 can-hover:focus:translate-y-0;
+  @apply can-hover:hover:translate-y-[-1px] can-hover:active:translate-y-0;
 }
 
 .Button.primary:not(.text):not(.icon) {
