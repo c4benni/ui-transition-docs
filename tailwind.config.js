@@ -21,6 +21,8 @@ module.exports = {
       addVariant("not-supports-blur", [
         "@supports not (backdrop-filter: blur(1px))",
       ]);
+      addVariant("landscape", "@media (orientation: landscape)");
+      addVariant("portrait", "@media (orientation: portrait)");
     }),
   ],
   important: true,
