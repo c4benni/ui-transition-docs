@@ -11,7 +11,7 @@ export type CodeSnippets = {
 };
 
 export type VisualsState = {
-  [key in Snippet]: boolean;
+  [key in Snippet]: boolean | number;
 };
 
 const overlayMarkup = (arg: {
@@ -106,7 +106,7 @@ const initialVisualsState = () => ({
   Scale: false,
   TranslateX: false,
   TranslateY: false,
-  Rotate: false,
+  Rotate: 0,
 });
 
 export const visualsState = ref<VisualsState>(initialVisualsState());
