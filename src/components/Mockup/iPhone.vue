@@ -118,10 +118,10 @@ export default defineComponent({
 }
 
 .status-bar {
-  @apply h-[24px] w-full px-3 flex items-end justify-between text-[0.75rem] text-headline dark:text-headline-dark font-medium opacity-95;
+  @apply h-[23.275px] w-full px-3 flex items-end justify-between text-[0.75rem] text-headline dark:text-headline-dark font-medium opacity-95;
 }
 
 .content {
-  @apply pointer-events-auto h-[calc(100%-24px)] w-full grid justify-items-center items-start relative max-w-full;
+  @apply pointer-events-auto h-[calc(100%-24.75px)] w-full grid justify-items-center items-start relative max-w-full;
 }
 </style>
