@@ -2,9 +2,6 @@
   <div
     :class="[
       'w-full md:-mt-[64px]',
-      {
-        invisible: !snippetMounted,
-      },
     ]"
   >
     <Tabs />
