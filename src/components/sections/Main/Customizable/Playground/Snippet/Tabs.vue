@@ -1,11 +1,11 @@
 <template>
-  <ul class="pb-3 overflow-x-auto hide-scrollbar flex items-center h-[72px] fill-after after:h-[72px] after:w-[32px] after:left-auto after:right-[-12px] after:top-auto after-gradient">
+  <ul class="pb-3 overflow-x-auto hide-scrollbar flex items-center h-[72px] fill-after after:h-[72px] after:w-[32px] after:left-auto after:right-[-12px] after:top-auto after-gradient pr-[34px]">
     <template v-for="(snippet, i) in snippets" :key="snippet.title">
       <Button
         :primary="false"
         tag="li"
         :class="[
-          'grid-flow-row justify-items-center text-sm gap-y-1 translate-y-0 h-[56px] py-1 flex-grow flex-shrink-0',
+          'grid-flow-row justify-items-center text-sm gap-y-1 translate-y-0 h-[56px] py-1 flex-grow flex-shrink-0 scale-100',
           {
             'text-paragraph dark:text-paragraph-dark opacity-70 dark:opacity-60 can-hover:hover:opacity-80':
               activeSnippet !== snippet.icon,
