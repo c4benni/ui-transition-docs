@@ -12,6 +12,7 @@ export default defineComponent({
   props: {
     text: Boolean,
     icon: Boolean,
+    disabled: Boolean,
     primary: {
       type: Boolean,
       default: true,
@@ -45,15 +46,22 @@ export default defineComponent({
         getTag.value,
         {
           ...attrs,
-          role: getTag.value === 'button' ? undefined : "button",
+          role: getTag.value === "button" ? undefined : "button",
+          disabled: props.value.disabled,
+          tabindex: props.value.disabled
+            ? "-1"
+            : attrs.tabindex || getTag.value === "button"
+            ? undefined
+            : "0",
           class: [
-            "Button",
+            "Button fill-before",
             props.value.size,
             {
               primary: props.value.primary,
               text: props.value.text,
-              [`${classNames.headline} icon fill-before before:bg-current before-interact`]:
+              [`${classNames.headline} icon before:bg-current before-interact`]:
                 props.value.icon,
+              'disabled grayscale opacity-60': props.value.disabled,
             },
           ],
         },
@@ -66,8 +74,16 @@ export default defineComponent({
 
 <style scoped lang="postcss">
 .Button {
-  @apply font-medium outline-none focus-visible:bg-opacity-70 active:scale-[0.95] md:active:scale-[0.985] active:opacity-90 transform-gpu inline-grid justify-center items-center select-none transition-opacity relative grid-flow-col gap-x-[0.5em] can-hover:hover:bg-opacity-80;
+  @apply font-medium outline-none transform-gpu inline-grid justify-center items-center select-none transition-opacity relative grid-flow-col gap-x-[0.5em] before:opacity-0 before:transition-opacity before:bg-current;
   transition-property: opacity, transform;
+}
+
+.Button:not(.disabled){
+  @apply focus-visible:bg-opacity-70 active:scale-[0.95] md:active:scale-[0.985] active:opacity-90 can-hover:hover:bg-opacity-80 active:before:opacity-20 can-hover:active:before:opacity-20 can-hover:hover:before:opacity-5;
+}
+
+.Button.disabled{
+  @apply cursor-not-allowed;
 }
 
 .Button:focus-visible {
