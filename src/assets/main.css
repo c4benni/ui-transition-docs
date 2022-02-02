@@ -156,7 +156,8 @@ textarea {
   --fade-appear-to: 1;
 }
 
-.w-h-full{
+.w-h-full,
+.h-w-full{
   @apply w-full h-full;
 }
 
