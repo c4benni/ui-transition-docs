@@ -1,21 +1,20 @@
 <script lang="ts">
-import {
-  h,
-  computed,
-  ref,
-  nextTick,
-  watch,
-  PropType,
-  resolveComponent,
-} from "@vue/runtime-core";
+import { h, computed, ref, nextTick, watch, PropType } from "@vue/runtime-core";
 import { PrismEditor } from "vue-prism-editor";
 import "vue-prism-editor/dist/prismeditor.min.css";
 import { highlight, languages } from "prismjs/components/prism-core";
 import "prismjs/components/prism-clike";
 import "prismjs/components/prism-javascript";
-import "prismjs/themes/prism-twilight.css";
+import "prismjs/components/prism-css";
+import "prismjs/components/prism-markup";
+// import "prismjs/components/prism-markup-templating";
+import "./main.css";
 import { defineComponent } from "@vue/runtime-core";
-import { copy, requiredStringProp } from "../../utils/main";
+import {
+  copy,
+  requiredStringProp,
+  undefinedStringProp,
+} from "../../utils/main";
 import Intersection, { Entry } from "../Intersection.vue";
 import { DynamicObject } from "../../types";
 import useBreakpoint from "../../hooks/useBreakpoints";
@@ -23,58 +22,78 @@ import IconWrapper from "../icons/IconWrapper.vue";
 import CopyIcon from "../icons/Copy.vue";
 import CloseIcon from "../icons/Close.vue";
 import CheckIcon from "../icons/Check.vue";
+import Button from "../Inputs/Button.vue";
 
 type Language = "css" | "js" | "html";
 
 type CopyState = "" | "waiting" | "success" | "error";
 
+type Tab = {
+  title: string;
+  active?: boolean;
+};
+
 export default defineComponent({
+  emits: ["snippet-mounted", "tab-changed"],
   components: {
     PrismEditor,
     Intersection,
-    CheckIcon,
-    CloseIcon,
-    CopyIcon,
   },
   props: {
     code: requiredStringProp,
     maxHeight: requiredStringProp,
+    minHeight: undefinedStringProp,
+    snippetClass: undefinedStringProp,
     lang: {
       type: String as PropType<Language>,
       default: "js",
     },
+    displayLang: undefinedStringProp,
     tabs: {
-      type: Array,
+      type: Array as PropType<Tab[]>,
       default: undefined,
     },
   },
-  setup(p) {
+  setup(p, { emit }) {
     const props = computed(() => p);
     const highlighted: DynamicObject<string> = {};
-    const minHeight = ref();
+    const minHeight = ref(props.value.minHeight || "");
 
     const breakpoint = useBreakpoint();
 
     const copyState = ref<CopyState>("");
 
+    const copyStateValue = (
+      waiting: any,
+      error: any,
+      success: any,
+      initial: any
+    ): any => {
+      switch (copyState.value) {
+        case "waiting" && waiting:
+          return waiting;
+        case "error":
+          return error;
+        case "success":
+          return success;
+        default:
+          return initial;
+      }
+    };
+
     const getCopyIcon = computed(() => {
-      if (copyState.value === "error") {
-        return CloseIcon;
-      }
+      return copyStateValue(null, CloseIcon, CheckIcon, CopyIcon);
+    });
 
-      if (copyState.value === "success") {
-        return CheckIcon;
-      }
-
-      return CopyIcon;
+    const copyTitle = computed(() => {
+      return copyStateValue("Processing", "Error copying", "Copied", "Copy");
     });
 
     const formatCode = computed(() =>
-      props.value.code
-        .replace(
-          /~\d+/g,
-          (str: string) => `${" ".repeat(parseFloat(str.replace(/~/g, "")))}`
-        )
+      props.value.code.replace(
+        /~\d+/g,
+        (str: string) => `\n${" ".repeat(parseFloat(str.replace(/~/g, "")))}`
+      )
     );
 
     function highlighter(code: string): string {
@@ -87,14 +106,35 @@ export default defineComponent({
     }
 
     const resetMinHeight = () => {
+      if (props.value.minHeight) return;
       minHeight.value = "";
     };
 
-    watch(() => props.value.code, resetMinHeight);
+    const resetCopyState = () => (copyState.value = "");
 
-    watch(() => props.value.lang, resetMinHeight);
+    watch(
+      () => props.value.code,
+      () => {
+        resetMinHeight();
+        resetCopyState();
+      }
+    );
+
+    watch(
+      () => props.value.lang,
+      () => {
+        resetMinHeight();
+        resetCopyState();
+      }
+    );
 
     watch(() => breakpoint.value.is, resetMinHeight);
+
+    const divideColor = "border-b border-gray-600/50 dark:border-gray-700/60";
+
+    const editorHeight = `calc(${props.value.maxHeight} - ${
+      32 + (props.value.tabs ? 38 : 0)
+    }px)`;
 
     return () => {
       return h(
@@ -106,7 +146,14 @@ export default defineComponent({
         },
         {
           default: ({ isIntersecting, inactive, target }: Entry) => {
-            if (!inactive && target && !minHeight.value && isIntersecting) {
+            const canSetMinHeight =
+              !props.value.minHeight &&
+              !inactive &&
+              target &&
+              !minHeight.value &&
+              isIntersecting;
+
+            if (canSetMinHeight) {
               nextTick(() => {
                 minHeight.value = `${target.getBoundingClientRect().height}px`;
               });
@@ -126,7 +173,10 @@ export default defineComponent({
                   "div",
                   {
                     class: [
-                      "h-8 flex items-center pl-[10px] border-b border-gray-600/50 dark:border-gray-700/60 fill-before-after relative before:w-2.5 before:h-2.5 after:w-2.5 after:h-2.5 before:rounded-full after:rounded-full before:bg-current before:opacity-20 after:bg-current after:opacity-20 before:top-auto after:top-auto after:translate-x-[calc(100%+0.3125rem)] before:left-[10px] after:left-[10px] pointer-events-none",
+                      "h-[32px] flex items-center pl-[10px] fill-before-after relative before:w-2.5 before:h-2.5 after:w-2.5 after:h-2.5 before:rounded-full after:rounded-full before:bg-current before:opacity-20 after:bg-current after:opacity-20 before:top-auto after:top-auto after:translate-x-[calc(100%+0.3125rem)] before:left-[10px] after:left-[10px] pointer-events-none",
+                      {
+                        [divideColor]: !props.value.tabs,
+                      },
                     ],
                   },
                   [
@@ -147,14 +197,14 @@ export default defineComponent({
                           {
                             class: "opacity-70",
                           },
-                          [props.value.lang]
+                          [props.value.displayLang || props.value.lang]
                         ),
 
                         h(
                           IconWrapper,
                           {
                             tag: "button",
-                            title: "Copy",
+                            title: copyTitle.value,
                             class: [
                               "rounded-full h-[16px] w-[16px] pointer-events-auto",
                               {
@@ -192,13 +242,70 @@ export default defineComponent({
                     ),
                   ]
                 ),
+
+                props.value.tabs
+                  ? h(
+                      "ul",
+                      {
+                        class: [
+                          "flex items-end px-[10px] overflow-x-auto h-[38px]",
+                          divideColor,
+                        ],
+                      },
+                      [
+                        props.value.tabs.map((tab, index, arr) => {
+                          return h(
+                            Button,
+                            {
+                              key: tab.title,
+                              primary: false,
+                              size: "sm",
+                              class: [
+                                "p-0 mr-3 h-[36px] rounded-none clip-none translate-y-0",
+                                {
+                                  "pr-0": index === arr.length - 1,
+                                  "opacity-60": !tab.active,
+                                  "border-b-[1.5px] font-bold": tab.active,
+                                },
+                              ],
+                              onClick: () => {
+                                emit("tab-changed", tab.title);
+
+                                resetCopyState();
+                              },
+                            },
+                            {
+                              default: () => tab.title,
+                            }
+                          );
+                        }),
+                      ]
+                    )
+                  : null,
+
                 isIntersecting
                   ? h(PrismEditor, {
                       highlight: highlighter,
                       modelValue: props.value.code,
-                      lineNumbers: true,
+                      // lineNumbers: true,
                       readonly: true,
-                      class: "content",
+                      insertSpaces: false,
+                      placeholder: "Code snippet",
+                      class: [
+                        "content",
+                        {
+                          "pt-3": props.value.tabs,
+                        },
+                        props.value.snippetClass,
+                      ],
+                      style: {
+                        minHeight: editorHeight,
+                        maxHeight: editorHeight,
+                      },
+                      tabindex: "-1",
+                      onVnodeMounted: () => {
+                        emit("snippet-mounted");
+                      },
                     })
                   : null,
               ]
@@ -223,11 +330,22 @@ export default defineComponent({
 }
 
 .content {
-  @apply p-[5px] pt-[7.5px];
+  @apply p-[5px] pt-[7.5px] pl-[15px] select-auto;
   line-height: 1.5;
+  overflow-y: auto;
 }
 
 .content :deep(textarea) {
   outline: none;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.content :deep(.prism-editor__container) {
+  min-width: max-content;
+}
+
+.content :deep(pre) {
+  white-space: pre;
 }
 </style>
