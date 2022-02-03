@@ -1,7 +1,5 @@
 <template>
-  <ul
-    class="pb-3 overflow-x-auto hide-scrollbar flex items-center h-[56px] fill-after after:h-[72px] after:w-[32px] after:left-auto after:right-[-12px] after:top-auto after-gradient pr-[34px]"
-  >
+  <SnippetTabsWrapper>
     <Button
       v-for="(snippet, i) in snippets"
       :key="snippet"
@@ -18,9 +16,9 @@
       :primary="false"
       @click="changeSnippet(snippet)"
     >
-      {{ snippet.replace(/BottomSheet/,'Bottom sheet') }}
+      {{ snippet.replace(/BottomSheet/, "Bottom sheet").replace(/FlipCard/,'Flip card') }}
     </Button>
-  </ul>
+  </SnippetTabsWrapper>
 </template>
 
 <script lang="ts">
@@ -28,14 +26,15 @@ import { defineComponent, ref } from "vue";
 import classNames from "../../../../../../utils/classNames";
 import Button from "../../../../../Inputs/Button.vue";
 import { activeSnippet, activeTab, Snippet } from "./state";
+import SnippetTabsWrapper from "../../../SnippetTabsWrapper.vue";
 
 export default defineComponent({
   name: "Tabs",
   emits: ["tab-changed"],
-  components: { Button },
+  components: { Button, SnippetTabsWrapper },
 
   setup(_, { emit }) {
-    const snippets = ["BottomSheet", "Switch", "Tabs"] as Snippet[];
+    const snippets = ["BottomSheet", "Switch", "FlipCard"] as Snippet[];
 
     const changeSnippet = (tab: Snippet) => {
       activeSnippet.value = tab;
@@ -59,16 +58,16 @@ export default defineComponent({
 .after-gradient::after {
   background-image: linear-gradient(
     to right,
-    hsl(240, 20%, 99%, 0),
-    hsl(240, 20%, 99%) 30%
+    hsl(0, 0%, 100%, 0),
+    hsl(0, 0%, 100%) 30%
   );
 }
 
 .dark .after-gradient::after {
   background-image: linear-gradient(
     to right,
-    hsl(216, 6%, 10%, 0),
-    hsl(216, 6%, 10%) 30%
+    hsl(180,5%,5%,0%),
+    hsl(180,5%,5%) 30%
   );
 }
 </style>
