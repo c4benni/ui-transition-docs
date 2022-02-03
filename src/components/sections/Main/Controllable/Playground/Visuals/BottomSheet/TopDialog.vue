@@ -1,6 +1,9 @@
 <template>
   <!-- top dialog -->
-  <div class="bg-white dark:bg-card-dark shadow-xl">
+  <div
+    v-if="bottomSheetState"
+    class="bg-white dark:bg-card-dark shadow-xl dark:shadow-md relative z-1 h-[108px]"
+  >
     <!-- header -->
     <div class="flex py-[8px] px-[14px]">
       <IconWrapper
@@ -8,6 +11,7 @@
         tabindex="-1"
         title="Close"
         class="text-lg justify-self-start w-[18px] h-[18px]"
+        @click="toggleBottomSheet"
       >
         <Close />
       </IconWrapper>
@@ -23,7 +27,9 @@
       class="grid items-center gap-x-[8px] grid-flow-col grid-cols-[18px,1fr] px-[14px] pb-[8px]"
     >
       <!-- markers -->
-      <div class="w-full h-[calc(100%-6px)] grid justify-center grid-rows-3 relative isolate">
+      <div
+        class="w-full h-[calc(100%-6px)] grid justify-center grid-rows-3 relative isolate"
+      >
         <template v-for="(icon, i) in locationIcons" :key="icon">
           <IconWrapper
             :class="[
@@ -60,12 +66,11 @@
               placeholder="Search destination"
               v-model="searchDestination"
               class="h-w-full rounded-[inherit] px-[8px] text-[13px] focus:text-base bg-[transparent] outline-none focus:border border-headline/20 dark:border-headline-dark/20 placeholder:text-[13px] py-[3px]"
+              tabindex="-1"
             />
           </div>
 
-          <IconWrapper
-            class="w-[18px] h-[18px] text-lg flex-shrink-0 ml-[8px]"
-          >
+          <IconWrapper class="w-[18px] h-[18px] text-lg flex-shrink-0 ml-[8px]">
             <Plus />
           </IconWrapper>
         </div>
@@ -75,25 +80,37 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, VNode } from "vue";
+import { computed, defineComponent, ref, VNode } from "vue";
 import LocationTo from "../../../../../../icons/LocationTo.vue";
 import LocationFrom from "../../../../../../icons/LocationFrom.vue";
 import Plus from "../../../../../../icons/Plus.vue";
 import Close from "../../../../../../icons/Close.vue";
 import IconWrapper from "../../../../../../icons/IconWrapper.vue";
+import { visualsState } from "../../Snippet/state";
 
 export default defineComponent({
-    name: "TopDialog",
-    components: { LocationTo, LocationFrom, Plus, Close, IconWrapper },
+  name: "TopDialog",
+  components: { LocationTo, LocationFrom, Plus, Close, IconWrapper },
 
-    setup() {
-        const locationIcons = ["LocationFrom", "LocationTo"];
+  setup() {
+    const locationIcons = ["LocationFrom", "LocationTo"];
 
-        const searchDestination = ref("");
-        return {
-            locationIcons,
-            searchDestination,
-        };
-    },
+    const searchDestination = ref("");
+
+    const bottomSheetState = computed(() => visualsState.value.BottomSheet);
+
+    const toggleBottomSheet = () =>
+      (visualsState.value = {
+        ...visualsState.value,
+        BottomSheet: !bottomSheetState.value,
+      });
+
+    return {
+      locationIcons,
+      searchDestination,
+      bottomSheetState,
+      toggleBottomSheet
+    };
+  },
 });
 </script>
