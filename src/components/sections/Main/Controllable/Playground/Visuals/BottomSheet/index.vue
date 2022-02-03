@@ -1,6 +1,8 @@
 <template>
   <Wireframe class="flex flex-col isolate">
     <Img
+      v-show="!bottomSheetState"
+      quality="40"
       public-id="ControllableMockup/google_street_view_uq1tpc.png"
       class="absolute h-[calc(100%-186px)] w-full rounded-[inherit] top-0 left-0 object-cover object-center scale-125 origin-bottom"
     />
@@ -19,11 +21,18 @@
       :class="[
         'absolute top-0 left-0 w-h-full z-1 rounded-[inherit]',
         {
-          'pointer-events-none': true,
+          'pointer-events-none': !bottomSheetState,
         },
       ]"
     >
-      <TopDialog/>
+      <div
+        v-if="bottomSheetState"
+        class="h-full w-full bg-black/70 absolute top-0 left-0"
+      />
+
+      <TopDialog />
+
+      <BottomDialog @click="toggleBottomSheet" />
     </div>
   </Wireframe>
 </template>
@@ -32,7 +41,6 @@
 import { computed, defineComponent, ref, VNode } from "vue";
 import Wireframe from "../Wireframe/index.vue";
 import GenericWireframe from "../Wireframe/Generic.vue";
-import { visualsState } from "../../Snippet/state";
 import IconWrapper from "../../../../../../icons/IconWrapper.vue";
 import Check from "../../../../../../icons/Check.vue";
 import Close from "../../../../../../icons/Close.vue";
@@ -42,6 +50,8 @@ import Phone from "../../../../../../icons/Phone.vue";
 import Img from "../../../../../../Img.vue";
 import Menu from "../../../../../../icons/Menu.vue";
 import TopDialog from "./TopDialog.vue";
+import { visualsState } from "../../Snippet/state";
+import BottomDialog from "./BottomDialog.vue";
 
 export default defineComponent({
   name: "CustomizableRotateVisuals",
@@ -56,25 +66,22 @@ export default defineComponent({
     Phone,
     Img,
     Menu,
-    TopDialog
-},
+    TopDialog,
+    BottomDialog,
+  },
 
   setup() {
-    const rotateState = computed(() => visualsState.value.Rotate);
+    const bottomSheetState = computed(() => visualsState.value.BottomSheet);
 
-    const tabs = ["Tab 1", "Tab 2"];
-
-    const changeTab = (tab: number) =>
+    const toggleBottomSheet = () =>
       (visualsState.value = {
         ...visualsState.value,
-        Rotate: tab,
+        BottomSheet: !bottomSheetState.value,
       });
 
-
     return {
-      rotateState,
-      tabs,
-      changeTab,
+      bottomSheetState,
+      toggleBottomSheet,
     };
   },
 });
