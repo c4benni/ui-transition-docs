@@ -15,6 +15,7 @@
             <Intro/>
             <Features/>
             <Customizable/>
+            <Controllable/>
         </div>
     </main>
 </template>
@@ -25,6 +26,7 @@ import classNames from '../../../utils/classNames'
 import Intro from './Intro/index.vue'
 import Features from './Features/index.vue';
 import Customizable from './Customizable/index.vue';
+import Controllable from './Controllable/index.vue';
 
 export default defineComponent({
     name: "Main",
@@ -33,6 +35,6 @@ export default defineComponent({
             classNames
         };
     },
-    components: { Intro, Features, Customizable }
+    components: { Intro, Features, Customizable, Controllable }
 })
 </script>
