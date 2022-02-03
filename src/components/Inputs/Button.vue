@@ -3,6 +3,7 @@
 <script lang="ts">
 import { computed, defineComponent, h, PropType } from "@vue/runtime-core";
 import classNames from "../../utils/classNames";
+import { eventKey } from "../../utils/eventKey";
 
 type Size = "sm" | "md" | "lg";
 
@@ -41,16 +42,27 @@ export default defineComponent({
       return props.value.tag;
     });
 
+    const runEvent = (event: string, payload: any) => {
+      if (typeof attrs[event] == "function") {
+        // @ts-ignore
+        attrs[event](payload);
+      }
+    };
+
+    const isButtonEl = getTag.value === "button";
+
     return function () {
       return h(
         getTag.value,
         {
           ...attrs,
-          role: getTag.value === "button" ? undefined : "button",
+          role: isButtonEl ? undefined : "button",
           disabled: props.value.disabled,
           tabindex: props.value.disabled
             ? "-1"
-            : attrs.tabindex || getTag.value === "button"
+            : attrs.tabindex
+            ? attrs.tabindex
+            : isButtonEl
             ? undefined
             : "0",
           class: [
@@ -61,9 +73,33 @@ export default defineComponent({
               text: props.value.text,
               [`${classNames.headline} icon before:bg-current before-interact`]:
                 props.value.icon,
-              'disabled grayscale opacity-60': props.value.disabled,
+              "disabled grayscale opacity-60": props.value.disabled,
             },
           ],
+          onKeydown: (e: KeyboardEvent) => {
+            runEvent("keydown", e);
+
+            if (
+              /space|enter/.test(eventKey(e)) &&
+              !props.value.disabled &&
+              !isButtonEl
+            ) {
+              e.preventDefault();
+            }
+          },
+          onKeyup: (e: KeyboardEvent) => {
+            runEvent("keyup", e);
+
+            if (
+              /space|enter/.test(eventKey(e)) &&
+              !props.value.disabled &&
+              !isButtonEl
+            ) {
+              const self = e.target as unknown as HTMLElement;
+
+              self?.click?.();
+            }
+          },
         },
         [slots.default?.()]
       );
@@ -78,11 +114,11 @@ export default defineComponent({
   transition-property: opacity, transform;
 }
 
-.Button:not(.disabled){
+.Button:not(.disabled) {
   @apply focus-visible:bg-opacity-70 active:scale-[0.95] md:active:scale-[0.985] active:opacity-90 can-hover:hover:bg-opacity-80 active:before:opacity-20 can-hover:active:before:opacity-20 can-hover:hover:before:opacity-5;
 }
 
-.Button.disabled{
+.Button.disabled {
   @apply cursor-not-allowed;
 }
 
