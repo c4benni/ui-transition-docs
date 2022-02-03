@@ -1,7 +1,7 @@
 <template>
   <div
     :class="[
-      'w-full md:-mt-[64px]',
+      'w-full md:-mt-[56px]',
     ]"
   >
     <Tabs />
