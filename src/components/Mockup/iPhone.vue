@@ -38,7 +38,7 @@
 
           <p
             :class="[
-              'opacity-0 group-hover:opacity-100 transition-opacity duration-300 group-hover:duration-[600ms] group-hover:ease-linear',
+              'opacity-0 can-hover:group-hover:opacity-100 transition-opacity duration-300 can-hover:group-hover:duration-[600ms] can-hover:group-hover:ease-linear',
               classNames.headline
             ]"
           >
