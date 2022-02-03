@@ -42,14 +42,14 @@ export default defineComponent({
       return props.value.tag;
     });
 
-    const runEvent = (event: string, payload: any) => {
-      if (typeof attrs[event] == "function") {
-        // @ts-ignore
-        attrs[event](payload);
-      }
-    };
+    // const runEvent = (event: string, payload: any) => {
+    //   if (typeof attrs[event] == "function") {
+    //     // @ts-ignore
+    //     attrs[event](payload);
+    //   }
+    // };
 
-    const isButtonEl = getTag.value === "button";
+    const isButtonEl = getTag.value === "button";    
 
     return function () {
       return h(
@@ -77,8 +77,6 @@ export default defineComponent({
             },
           ],
           onKeydown: (e: KeyboardEvent) => {
-            runEvent("keydown", e);
-
             if (
               /space|enter/.test(eventKey(e)) &&
               !props.value.disabled &&
@@ -88,8 +86,6 @@ export default defineComponent({
             }
           },
           onKeyup: (e: KeyboardEvent) => {
-            runEvent("keyup", e);
-
             if (
               /space|enter/.test(eventKey(e)) &&
               !props.value.disabled &&
