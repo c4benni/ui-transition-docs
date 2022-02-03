@@ -10,7 +10,7 @@
         tabindex="-1"
         size="sm"
         :class="[
-          'scale-100 translate-y-0 flex-shrink-0 flex-grow rounded-none clip-none text-[14px] h-[42px] md:h-[36px]',
+          'scale-100 translate-y-0 w-full flex-grow px-0 rounded-none clip-none text-[14px] h-[42px] md:h-[36px]',
           {
             'rounded-tl-[inherit]': i === 0,
             'border-l border-l-gray-200 dark:border-l-gray-800 rounded-tr-[inherit]':
