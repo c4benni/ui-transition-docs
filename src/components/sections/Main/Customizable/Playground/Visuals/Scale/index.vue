@@ -1,6 +1,10 @@
 <template>
   <Wireframe>
-    <GenericWireframe :disable-action="dialogState" action-text="Open dialog" @open-visual="openDialog" />
+    <GenericWireframe
+      :disable-action="dialogState"
+      action-text="Open dialog"
+      @open-visual="openDialog"
+    />
 
     <div
       :class="[
@@ -19,7 +23,7 @@
       <div
         v-if="dialogState"
         :class="[
-          'rounded-[6px] bg-white dark:bg-card-dark border relative z-1 border-gray-300 shadow-2xl dark:shadow-none dark:border-gray-600/30 text-center',
+          'rounded-[6px] bg-white dark:bg-card-dark border relative z-1 border-gray-300 shadow-2xl dark:shadow-none dark:border-gray-600/[0.25] text-center',
         ]"
       >
         <div
@@ -33,7 +37,7 @@
           </div>
 
           Are you sure about this?
-          <br/>
+          <br />
           This action cannot be reversed.
         </div>
 
@@ -78,7 +82,9 @@ export default defineComponent({
   setup() {
     const actions = ["Cancel", "Continue"];
 
-    const dialogState = computed(()=> visualsState.value.Scale)
+    const dialogState = computed(
+      () => visualsState.value.Scale
+    ) as unknown as boolean;
 
     const toggleDialog = (val: boolean) => {
       visualsState.value = {
