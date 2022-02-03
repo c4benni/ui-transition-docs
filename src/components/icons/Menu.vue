@@ -1,30 +1,6 @@
+
 <template>
-  <svg width="1em" height="1em" viewBox="0 0 512 512">
-    <path
-      fill="none"
-      stroke="currentColor"
-      strokeLinecap="round"
-      strokeMiterlimit="10"
-      strokeWidth="48"
-      d="M88 152h336"
-    ></path>
-    <path
-      fill="none"
-      stroke="currentColor"
-      strokeLinecap="round"
-      strokeMiterlimit="10"
-      strokeWidth="48"
-      d="M88 256h336"
-    ></path>
-    <path
-      fill="none"
-      stroke="currentColor"
-      strokeLinecap="round"
-      strokeMiterlimit="10"
-      strokeWidth="48"
-      d="M88 360h336"
-    ></path>
-  </svg>
+  <svg width="1em" height="1em" viewBox="0 0 16 16"><g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5"><path d="M2.75 12.25h10.5m-10.5-4h10.5m-10.5-4h10.5"></path></g></svg>
 </template>
 
 <script lang="ts">
