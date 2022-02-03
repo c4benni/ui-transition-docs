@@ -1,7 +1,5 @@
 <template>
-  <ul
-    class="pb-3 overflow-x-auto hide-scrollbar flex items-center h-[56px] fill-after after:h-[72px] after:w-[32px] after:left-auto after:right-[-12px] after:top-auto after-gradient pr-[34px]"
-  >
+  <SnippetTabsWrapper>
     <Button
       v-for="(snippet, i) in snippets"
       :key="snippet.title"
@@ -20,7 +18,7 @@
     >
       {{ snippet.title }}
     </Button>
-  </ul>
+  </SnippetTabsWrapper>
 </template>
 
 <script lang="ts">
@@ -33,11 +31,20 @@ import Button from "../../../../../Inputs/Button.vue";
 import IconWrapper from "../../../../../icons/IconWrapper.vue";
 import { activeSnippet, activeTab, Snippet } from "./state";
 import classNames from "../../../../../../utils/classNames";
+import SnippetTabsWrapper from "../../../SnippetTabsWrapper.vue";
 
 export default defineComponent({
   name: "Tabs",
   emits: ["tab-changed"],
-  components: { Scale, TranslateX, TranslateY, Rotate, Button, IconWrapper },
+  components: {
+    Scale,
+    TranslateX,
+    TranslateY,
+    Rotate,
+    Button,
+    IconWrapper,
+    SnippetTabsWrapper,
+  },
 
   setup(_, { emit }) {
     const snippet = (icon: string, title?: string) =>
