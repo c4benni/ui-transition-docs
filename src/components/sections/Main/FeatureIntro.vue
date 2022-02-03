@@ -6,13 +6,13 @@
   </h2>
 
   <h3
-    class="font-extrabold text-xl xs:text-2xl md:text-3xl mb-2 sm:mb-3 text-card-heading dark:text-headline-dark"
+    class="font-extrabold text-xl xs:text-2xl md:text-4xl mb-2 sm:mb-3 text-card-heading dark:text-headline-dark"
   >
     {{ title }}
   </h3>
 
   <h4
-    class="text-sm leading-normal max-w-lg text-card-paragraph dark:text-paragraph-dark mb-7"
+    class="text-sm sm:text-base leading-normal max-w-lg text-card-paragraph dark:text-paragraph-dark mb-7"
   >
     {{ subtitle }}
   </h4>
