@@ -1,6 +1,6 @@
 import { ref, watch } from "vue";
 
-export type Snippet = "BottomSheet" | "Switch" | "Tabs";
+export type Snippet = "BottomSheet" | "Switch" | "FlipCard";
 
 export type Tab = "App.vue" | "config.js";
 
@@ -102,7 +102,7 @@ export const snippets: CodeSnippets = {
     tTo: "translate3d({${to}}, 0, 0)",
     defaultValuesComment: "-100% & 0%",
   }),
-  Tabs: {
+  FlipCard: {
     "App.vue": `<UiTransition config='rotate(45deg)'>~2<button :key="activeTab" class="fab">~4<!-- content -->~2</button>~0</UiTransition>`,
     ...getConfig({
       configName: "rotate",
@@ -121,7 +121,7 @@ export const activeTab = ref<Tab>("App.vue");
 const initialVisualsState = () => ({
   BottomSheet: false,
   Switch: false,
-  Tabs: false,
+  FlipCard: false,
 });
 
 export const visualsState = ref<VisualsState>(initialVisualsState());
