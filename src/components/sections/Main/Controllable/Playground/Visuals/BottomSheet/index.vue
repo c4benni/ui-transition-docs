@@ -3,7 +3,7 @@
     <Img
       v-show="!bottomSheetState"
       quality="40"
-      public-id="ControllableMockup/google_street_view_uq1tpc.png"
+      public-id="ControllableMockup/google_street_view_obxqrl.png"
       class="absolute h-[calc(100%-186px)] w-full rounded-[inherit] top-0 left-0 object-cover object-center scale-125 origin-bottom"
     />
 
@@ -25,10 +25,10 @@
         },
       ]"
     >
-      <div
+      <!-- <div
         v-if="bottomSheetState"
         class="h-full w-full bg-black/70 absolute top-0 left-0"
-      />
+      /> -->
 
       <TopDialog />
 
