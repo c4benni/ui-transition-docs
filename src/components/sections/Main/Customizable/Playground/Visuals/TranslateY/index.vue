@@ -2,7 +2,7 @@
   <Wireframe class="grid">
     <GenericWireframe
       :disable-action="toastState"
-      action-text="Open toast"
+      action-text="Show toast"
       @open-visual="openToast"
     />
 
@@ -48,7 +48,7 @@ export default defineComponent({
   components: { Wireframe, GenericWireframe, IconWrapper, Check, Close, Button },
 
   setup() {
-    const toastState = computed(() => visualsState.value.TranslateY);
+    const toastState = computed(() => visualsState.value.TranslateY) as unknown as boolean;
 
     const toggleToast = (val: boolean) => {
       visualsState.value = {
