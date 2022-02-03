@@ -13,7 +13,7 @@
 
       <div
         :class="[
-          'text-[0.95rem] leading-relaxed xs:text-base xs:leading-relaxed sm:text-lg sm:leading-loose lg:text-base lg:leading-loose col-start-1',
+          'text-[0.95rem] leading-relaxed xs:text-base xs:leading-relaxed sm:text-lg sm:leading-loose lg:text-lg lg:leading-loose col-start-1',
           classNames.paragraph,
           centerHeadlines,
           {
