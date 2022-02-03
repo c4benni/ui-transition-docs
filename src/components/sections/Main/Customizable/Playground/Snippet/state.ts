@@ -14,6 +14,20 @@ export type VisualsState = {
   [key in Snippet]: boolean | number;
 };
 
+const getConfig = (arg: {
+  configName: string;
+  configDefaults: string;
+  tFrom: string;
+  tTo: string;
+  defaultValuesComment: string;
+}) => {
+  const { configName, configDefaults, tFrom, tTo, defaultValuesComment } = arg;
+
+  return {
+    "config.js": `//set defaults as ${defaultValuesComment}~0${configName}: (${configDefaults}) => {~2return {~4from: {~6transform: \`${tFrom}\`,~6opacity: '{0}',~4},~4to: {~6transform: \`${tTo}\`,~6opacity: '{1}'~4}~2};~0}`,
+  };
+};
+
 const overlayMarkup = (arg: {
   name: string;
   backdrop?: boolean;
@@ -58,7 +72,13 @@ const overlayMarkup = (arg: {
             ? '~2<!-- fade is the default -->~2<UiTransition>~4<div v-if="open" class="backdrop"/>~2</UiTransition/>~0'
             : ""
         }~2${content}~0</div>`,
-    "config.js": `//set defaults as ${defaultValuesComment}~0${configName}: (${configDefaults}) => {~2return {~4from: {~6transform: \`${tFrom}\`,~6opacity: '{0}',~4},~4to: {~6transform: \`${tTo}\`,~6opacity: '{1}'~4}~2};~0}`,
+    ...getConfig({
+      configName,
+      configDefaults,
+      tFrom,
+      tTo,
+      defaultValuesComment,
+    }),
   };
 };
 
@@ -93,8 +113,14 @@ export const snippets: CodeSnippets = {
     defaultValuesComment: "-100% & 0%",
   }),
   Rotate: {
-    "App.vue": "console.log(360)",
-    "config.js": "console.log(360-config)",
+    "App.vue": `<UiTransition config='rotate(45deg)'>~2<button :key="activeTab" class="fab">~4<!-- content -->~2</button>~0</UiTransition>`,
+    ...getConfig({
+      configName: "rotate",
+      configDefaults: `from = '360deg', to = '0deg'`,
+      defaultValuesComment: "360deg & 0deg",
+      tFrom: "rotate({360deg})",
+      tTo: "rotate({0deg})",
+    }),
   },
 };
 
