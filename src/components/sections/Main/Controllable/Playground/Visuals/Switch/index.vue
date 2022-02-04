@@ -3,7 +3,7 @@
     <div
       class="flex items-center justify-center h-full"
     >
-      <label for="check" class="mr-[8px]"> Toggle </label>
+      <label for="check" class="mr-[8px] text-paragraph dark:text-paragraph-dark"> Toggle </label>
       <Switch id="check" />
     </div>
   </Wireframe>
