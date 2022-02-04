@@ -16,6 +16,7 @@
             <Features/>
             <Customizable/>
             <Controllable/>
+            <GroupsAndDelays/>
         </div>
     </main>
 </template>
@@ -27,6 +28,7 @@ import Intro from './Intro/index.vue'
 import Features from './Features/index.vue';
 import Customizable from './Customizable/index.vue';
 import Controllable from './Controllable/index.vue';
+import GroupsAndDelays from './GroupsAndDelays/index.vue';
 
 export default defineComponent({
     name: "Main",
@@ -35,6 +37,6 @@ export default defineComponent({
             classNames
         };
     },
-    components: { Intro, Features, Customizable, Controllable }
+    components: { Intro, Features, Customizable, Controllable, GroupsAndDelays }
 })
 </script>
