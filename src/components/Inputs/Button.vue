@@ -91,7 +91,7 @@ export default defineComponent({
               !props.value.disabled &&
               !isButtonEl
             ) {
-              const self = e.target as unknown as HTMLElement;
+              const self = e.target as unknown as HTMLElement;              
 
               self?.click?.();
             }
@@ -111,7 +111,11 @@ export default defineComponent({
 }
 
 .Button:not(.disabled) {
-  @apply focus-visible:bg-opacity-70 active:scale-[0.95] md:active:scale-[0.985] active:opacity-90 can-hover:hover:bg-opacity-80 active:before:opacity-20 can-hover:active:before:opacity-20 can-hover:hover:before:opacity-5;
+  @apply focus-visible:bg-opacity-70 active:scale-[0.95] md:active:scale-[0.985] active:opacity-90 active:before:opacity-20 can-hover:active:before:opacity-20 cursor-pointer;
+}
+
+.Button:not(.text){
+  @apply can-hover:hover:before:opacity-5 can-hover:hover:bg-opacity-80;
 }
 
 .Button.disabled {
