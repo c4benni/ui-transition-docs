@@ -6,7 +6,7 @@
           tag="div"
           tabindex="-1"
           class="w-[30px] translate-y-0 scale-100 px-0 h-[30px] rounded-full bg-white dark:bg-card-dark shadow-lg dark:shadow-none z-10 clip-none text-headline dark:text-headline-dark"
-          title="Open nav"
+          :title="`${state ? 'Close' : 'Open'} nav`"
           @click="state = !state"
         >
           <IconWrapper>
@@ -29,6 +29,7 @@
         :primary="false"
         size="md"
         class="translate-y-0 scale-100 text-[16px] w-full mt-[12px]"
+        @click="state = false"
       >
         {{ item }}
       </Button>
@@ -70,17 +71,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style scoped lang="postcss">
-.gradient-after::after {
-  background-image: linear-gradient(
-    to bottom,
-    rgb(255, 255, 254, 0),
-    rgb(255, 255, 254)
-  );
-}
-
-.dark .gradient-after::after {
-  background-image: linear-gradient(to bottom, rgb(0, 0, 0, 0), rgb(0 0 0));
-}
-</style>
