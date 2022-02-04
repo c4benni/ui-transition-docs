@@ -52,3 +52,18 @@ export default defineComponent({
   },
 });
 </script>
+
+<style scoped lang="postcss">
+.gradient-after::after {
+  background-image: linear-gradient(
+    to bottom,
+    rgb(255, 255, 254, 0),
+    rgb(255, 255, 254)
+  );
+}
+
+.dark .gradient-after::after {
+  background-image: linear-gradient(to bottom, rgb(0, 0, 0, 0), rgb(0 0 0));
+}
+</style>
+
