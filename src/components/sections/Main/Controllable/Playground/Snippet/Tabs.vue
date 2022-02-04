@@ -39,7 +39,7 @@ export default defineComponent({
     const changeSnippet = (tab: Snippet) => {
       activeSnippet.value = tab;
 
-      activeTab.value = "App.vue";
+      activeTab.value = "App.vue";      
 
       emit("tab-changed", tab);
     };
