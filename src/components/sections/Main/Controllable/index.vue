@@ -4,7 +4,7 @@
     >
         <FeatureIntro
             badge="Controllable"
-            title="You are in full controll"
+            title="You are in full control"
             subtitle="Transitioning elements must not enter, or leave the viewport to be transitioned! UiTransition provides an easy way to change animate elements dynamically in response to states changes."
         />
 
