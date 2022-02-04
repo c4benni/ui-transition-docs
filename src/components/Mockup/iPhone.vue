@@ -7,7 +7,8 @@
   >
     <div role="presentation" aria-hidden="true" class="Mockup">
       <div class="frame">
-        <div v-if="isIntersecting && mockupLoaded" class="screen">
+         <!-- v-if="isIntersecting && mockupLoaded" -->
+        <div class="screen">
           <div class="status-bar">
             <span class="pl-2"> 9:41 </span>
 
