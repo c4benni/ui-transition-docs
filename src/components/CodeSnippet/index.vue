@@ -286,7 +286,7 @@ export default defineComponent({
                       )
                     : null,
                 ]),
-                isIntersecting
+                true
                   ? h(PrismEditor, {
                       highlight: highlighter,
                       modelValue: props.value.code,
