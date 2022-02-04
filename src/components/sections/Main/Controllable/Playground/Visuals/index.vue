@@ -7,11 +7,11 @@ import { computed, defineComponent } from "vue";
 import Switch from "./Switch/index.vue";
 import BottomSheet from "./BottomSheet/index.vue";
 import { activeSnippet } from "../Snippet/state";
-import Tabs from "../Snippet/Tabs.vue";
+import FlipCard from "./FlipCard/index.vue";
 
 export default defineComponent({
   name: "CustomizableVisuals",
-  components: { Switch, BottomSheet, Tabs },
+  components: { Switch, BottomSheet, FlipCard },
   setup() {
     const render = computed(()=>{
       return activeSnippet.value
