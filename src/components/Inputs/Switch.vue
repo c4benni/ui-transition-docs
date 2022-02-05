@@ -17,7 +17,7 @@
       :class="[
         'w-[25px] h-[25px] rounded-full bg-white dark:bg-gray-100 z-1 mx-[1.5px] shadow-md',
         {
-          'translate-x-[17px]': isChecked
+          'translate-x-[16px]': isChecked
         }
       ]"
     >
@@ -25,7 +25,7 @@
         ref="input"
         v-bind="inputAttrs"
         type="checkbox"
-        class="sr-only"
+        class="sr-only left-[50%] top-[50%]"
         :id="id"
         :checked="isChecked"
         @input="onInput"
