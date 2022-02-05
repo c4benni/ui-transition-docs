@@ -4,11 +4,14 @@
       rootMargin: '72px 0px',
     }"
     #default="{ isIntersecting }"
+    :disabled="!useIntersection"
   >
     <div role="presentation" aria-hidden="true" class="Mockup">
       <div class="frame">
+        <!-- v-if="isIntersecting && mockupLoaded" -->
+
         <div 
-        v-if="isIntersecting && mockupLoaded"
+        v-if="mockupLoaded && (useIntersection ? isIntersecting : true)"
         class="screen">
           <div class="status-bar">
             <span class="pl-2"> 9:41 </span>
@@ -79,6 +82,9 @@ export default defineComponent({
     Intersection,
     Img,
     Loader,
+  },
+  props:{
+    useIntersection: Boolean
   },
   setup() {
     const statusBarIcons = ["WifiIcon", "BatteryIcon"];
