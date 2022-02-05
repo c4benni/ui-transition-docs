@@ -30,7 +30,7 @@ export default defineComponent({
   },
   setup(p, { attrs, emit }) {
     const props = computed(() => p);
-    const loaded = ref(false);
+    const loaded = ref<boolean | "error">(false);
 
     onBeforeMount(() => {
       mounted = true;
@@ -65,7 +65,11 @@ export default defineComponent({
     );
 
     return () => {
-      if (mounted && (loadedSrc[getSrc.value] || intersected.value)) {
+      if (
+        mounted &&
+        loaded.value !== "error" &&
+        (loadedSrc[getSrc.value] || intersected.value)
+      ) {
         return h("img", {
           ...attrs,
           src: getSrc.value,
@@ -96,6 +100,8 @@ export default defineComponent({
           },
           onError: () => {
             emit("load-error");
+
+            loaded.value = "error";
           },
         });
       }
