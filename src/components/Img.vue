@@ -1,5 +1,13 @@
 <script lang="ts">
-import { computed, defineComponent, h, onBeforeMount, ref, watch } from "vue";
+import {
+  computed,
+  defineComponent,
+  h,
+  onBeforeMount,
+  reactive,
+  ref,
+  watch,
+} from "vue";
 import { undefinedProp } from "../utils/main";
 import { Cloudinary } from "cloudinary-core";
 import Intersection from "./Intersection.vue";
@@ -85,23 +93,27 @@ export default defineComponent({
               [props.value.loadingBackground]: !loaded.value,
             },
           ],
-          onAnimationend: (e: AnimationEvent) => {
-            emit("animationend", e);
-            loadedSrc[getSrc.value] = 1;
-          },
-          onLoadstart: () => {
-            emit("load-start");
+          ...(loadedSrc[getSrc.value]
+            ? {
+                onAnimationend: (e: AnimationEvent) => {
+                  emit("animationend", e);
+                  loadedSrc[getSrc.value] = 1;
+                },
+                onLoadstart: () => {
+                  emit("load-start");
 
-            loaded.value = false;
-          },
-          onLoad: () => {
+                  loaded.value = false;
+                },
+                onError: () => {
+                  emit("load-error");
+
+                  loaded.value = "error";
+                },
+              }
+            : {}),
+          onLoadOnce: () => {
             loaded.value = true;
             requestAnimationFrame(() => emit("load-success"));
-          },
-          onError: () => {
-            emit("load-error");
-
-            loaded.value = "error";
           },
         });
       }
@@ -126,7 +138,7 @@ export default defineComponent({
             return h("div", {
               ...attrs,
               "aria-label": props.value.alt,
-              title: "loading image",
+              title: props.value.alt || "loading image",
               class: [
                 "inline-block pointer-events-none",
                 props.value.loadingBackground,
