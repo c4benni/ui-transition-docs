@@ -106,8 +106,7 @@ export default defineComponent({
 
 <style scoped lang="postcss">
 .Button {
-  @apply font-medium outline-none transform-gpu inline-grid justify-center items-center select-none transition-opacity relative grid-flow-col gap-x-[0.5em] before:opacity-0 before:transition-opacity before:bg-current isolate before:-z-1;
-  transition-property: opacity, transform;
+  @apply font-medium outline-none transform-gpu inline-grid justify-center items-center select-none transition-[opacity,transform,box-shadow] relative grid-flow-col gap-x-[0.5em] before:opacity-0 before:transition-opacity before:bg-current isolate before:-z-1;
 }
 
 .Button:not(.disabled) {
