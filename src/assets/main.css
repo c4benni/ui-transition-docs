@@ -177,3 +177,7 @@ textarea {
 .clip-none{
   clip-path: none !important;
 }
+
+code{
+  @apply p-1 rounded text-[15px] bg-card/60 dark:bg-card-dark;
+}
