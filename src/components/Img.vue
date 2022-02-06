@@ -64,6 +64,33 @@ export default defineComponent({
       return src;
     });
 
+    const loadImage = () => {
+      if (!intersected.value) return;
+
+      loaded.value = false;
+
+      emit("load-start");
+
+      const img = new Image();
+
+      const toggleLoaded = (val: boolean) => {
+        loaded.value = val;
+      };
+
+      img.decoding = "async";
+
+      img.src = getSrc.value;
+
+      img
+        .decode()
+        .then(() => {
+          toggleLoaded(true);
+        })
+        .catch(() => {
+          toggleLoaded(false);
+        });
+    };
+
     watch(
       () => getSrc.value,
       (n) => {
@@ -73,11 +100,18 @@ export default defineComponent({
       }
     );
 
+    watch(
+      () => intersected.value,
+      (n) => {
+        n && loadImage();
+      }
+    );
+
     return () => {
       if (
         mounted &&
         loaded.value !== "error" &&
-        (loadedSrc[getSrc.value] || intersected.value)
+        (loadedSrc[getSrc.value] || loaded.value)
       ) {
         return h("img", {
           ...attrs,
@@ -85,7 +119,7 @@ export default defineComponent({
           alt: props.value.alt,
           height: props.value.height,
           width: props.value.width,
-          decoding: props.value.decoding || 'async',
+          decoding: "async",
           crossorigin: "anonymous",
           "data-src-cache": props.value.publicId ? getSrc.value : undefined,
           class: [
