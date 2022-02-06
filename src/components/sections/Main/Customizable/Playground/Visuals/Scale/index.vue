@@ -8,7 +8,7 @@
 
     <div
       :class="[
-        'grid justify-items-center items-center isolate absolute w-h-full top-0 left-0 rounded-[inherit]',
+        'grid justify-items-center items-center isolate absolute w-h-full top-0 left-0 rounded-sm',
         {
           'pointer-events-none': !dialogState,
         },
