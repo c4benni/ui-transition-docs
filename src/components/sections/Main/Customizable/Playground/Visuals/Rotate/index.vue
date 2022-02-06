@@ -1,7 +1,7 @@
 <template>
   <Wireframe class="flex flex-col">
     <ul
-      class="flex border-y border-gray-200 dark:border-gray-800 h-fit rounded-t-[inherit]"
+      class="flex border-y border-gray-200 dark:border-gray-800 h-fit rounded-t-sm"
     >
       <Button
         v-for="(tab, i) in tabs"
