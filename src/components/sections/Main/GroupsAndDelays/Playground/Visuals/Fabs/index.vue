@@ -12,7 +12,7 @@
             tag="div"
             tabindex="-1"
             :class="[
-              'text-[14px] translate-y-0 scale-100 rounded-none clip-none',
+              'text-[14px] h-[48px] md:h-[42px] translate-y-0 scale-100 rounded-none clip-none',
               {
                 'border-r border-r-gray-200 dark:border-r-gray-600/30': i === 0,
                 'text-primary dark:text-primary-dark border-b-[1.5px] border-primary dark:border-primary-dark':
