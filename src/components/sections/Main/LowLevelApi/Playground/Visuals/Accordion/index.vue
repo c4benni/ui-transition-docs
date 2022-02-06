@@ -15,7 +15,7 @@
       >
         <template #header> 
           <div
-            class="p-[16px] w-full text-left"
+            class="p-[16px] w-full text-left cursor-pointer"
             @click.stop="toggleActiveIndex(item)"
           >
             Hello  
@@ -38,7 +38,7 @@ import Wireframe from "../Wireframe/index.vue";
 import Accordion from "./Accordion.vue";
 
 export default defineComponent({
-  name: "CustomizableRotateVisuals",
+  name: "LowLevelApiAccordion",
   components: {
     Wireframe,
     Accordion,
