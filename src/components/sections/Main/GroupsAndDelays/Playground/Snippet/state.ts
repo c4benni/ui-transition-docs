@@ -1,6 +1,6 @@
 import { ref, watch } from "vue";
 
-export type Snippet = "NavMenu" | "Fabs" | "ShareDialog" | "Advanced";
+export type Snippet = "NavMenu" | "Fabs" | "ShareDialog" | "Deferred";
 
 export type Tab = "App.vue" | "config.js";
 
@@ -112,7 +112,7 @@ export const snippets: CodeSnippets = {
       tTo: "rotate({0deg})",
     }),
   },
-  Advanced: {
+  Deferred: {
     "App.vue": `<UiTransition config='rotate(45deg)'>~2<button :key="activeTab" class="fab">~4<!-- content -->~2</button>~0</UiTransition>`,
     ...getConfig({
       configName: "rotate",
@@ -133,7 +133,7 @@ const initialVisualsState = () =>
     NavMenu: false,
     Fabs: false,
     ShareDialog: false,
-    Advanced: false,
+    Deferred: false,
   } as {
     [key in Snippet]: boolean;
   });
