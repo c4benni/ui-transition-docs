@@ -3,7 +3,7 @@
   <slot name="header">
     <div
       v-if="showHeader"
-      class="bg-white dark:bg-card-dark/50 h-[42px] w-full border-b border-gray-200 dark:border-gray-600/20 flex justify-between items-center px-[12px]"
+      class="bg-white dark:bg-card-dark/50 min-h-[48px] md:min-h-[42px] w-full border-b border-gray-200 dark:border-gray-600/20 flex justify-between items-center px-[12px]"
     >
       <slot name="headerAction" />
 
@@ -27,7 +27,9 @@
 
     <!-- grid -->
     <ul
-      class="w-full grid grid-cols-2 gap-[12px] mt-[24px] fill-after after:z-1 gradient-after after:h-[42px] after:bottom-0 after:top-auto"
+      :class="['w-full grid grid-cols-2 gap-[12px] mt-[24px] fill-after after:z-1 after:h-[42px] after:bottom-0 after:top-auto',{
+        'gradient-after': !breakpoint.isMobile
+      }]"
     >
       <li v-for="i in 4" :key="i" class="w-full">
         <div class="h-[96px] w-full bg-current opacity-[0.08] rounded" />
@@ -41,6 +43,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import useBreakpoint from "../../../../../../../hooks/useBreakpoints";
 
 export default defineComponent({
   name: "CustomizableGenericWireframes",
@@ -49,6 +52,9 @@ export default defineComponent({
     showHeader: Boolean,
   },
   setup() {
+    const breakpoint = useBreakpoint();
+
+    return {breakpoint}
   },
 });
 </script>
