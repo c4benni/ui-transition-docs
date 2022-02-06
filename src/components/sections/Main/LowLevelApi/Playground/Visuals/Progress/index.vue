@@ -36,7 +36,7 @@ import Button from "../../../../../../Inputs/Button.vue";
 type FabStyle = "Custom" | "Android";
 
 export default defineComponent({
-  name: "CustomizableRotateVisuals",
+  name: "LowLevelApiProgress",
   components: {
     Wireframe,
     Button
