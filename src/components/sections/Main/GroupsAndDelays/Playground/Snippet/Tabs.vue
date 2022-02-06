@@ -34,7 +34,7 @@ export default defineComponent({
   components: { Button, SnippetTabsWrapper },
 
   setup(_, { emit }) {
-    const snippets = ["NavMenu", "Fabs", "ShareDialog", "Advanced"] as Snippet[];
+    const snippets = ["NavMenu", "Fabs", "ShareDialog", "Deferred"] as Snippet[];
 
     const changeSnippet = (tab: Snippet) => {
       activeSnippet.value = tab;
