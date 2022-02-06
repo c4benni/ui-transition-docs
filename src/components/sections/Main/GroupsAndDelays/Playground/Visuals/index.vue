@@ -7,14 +7,14 @@ import { computed, defineComponent } from "vue";
 import Fabs from "./Fabs/index.vue";
 import NavMenu from "./NavMenu/index.vue";
 import ShareDialog from "./ShareDialog/index.vue";
-import Advanced from "./Advanced/index.vue";
+import Deferred from "./Deferred/index.vue";
 import { activeSnippet } from "../Snippet/state";
 import Tabs from "../Snippet/Tabs.vue";
 
 
 export default defineComponent({
   name: "CustomizableVisuals",
-  components: { Fabs, NavMenu, Tabs, ShareDialog, Advanced },
+  components: { Fabs, NavMenu, Tabs, ShareDialog, Deferred },
   setup() {
     const render = computed(()=>{
       return activeSnippet.value
