@@ -57,7 +57,7 @@ export default defineComponent({
         {
           ...attrs,
           role: isButtonEl ? undefined : "button",
-          disabled: props.value.disabled,
+          disabled: props.value.disabled || undefined,
           tabindex: props.value.disabled
             ? "-1"
             : attrs.tabindex
