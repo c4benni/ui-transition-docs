@@ -1,10 +1,14 @@
 <template>
   <Wireframe>
-    <GenericWireframe :disable-action="drawerState" action-text="Open drawer" @open-visual="openDrawer" />
+    <GenericWireframe
+      :disable-action="drawerState"
+      action-text="Open drawer"
+      @open-visual="openDrawer"
+    />
 
     <div
       :class="[
-        'grid justify-items-end items-center isolate absolute w-h-full top-0 left-0 rounded-[inherit]',
+        'grid justify-items-end items-center isolate absolute w-h-full top-0 left-0 rounded-sm',
         {
           'pointer-events-none': !drawerState,
         },
@@ -70,7 +74,9 @@ export default defineComponent({
   components: { Wireframe, GenericWireframe, Button },
 
   setup() {
-    const drawerState = computed(() => visualsState.value.TranslateX);
+    const drawerState = computed(
+      () => visualsState.value.TranslateX
+    ) as unknown as boolean;
 
     const toggleDialog = (val: boolean) => {
       visualsState.value = {
