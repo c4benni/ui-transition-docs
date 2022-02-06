@@ -23,7 +23,7 @@
       >
         <p class="mb-1">
           Tired of <span class="opacity-80">janky animations</span>, or
-          <code class="font-mono">mechanical easings</code>?
+          <span class="font-mono">mechanical easings</span>?
         </p>
 
         <p>
