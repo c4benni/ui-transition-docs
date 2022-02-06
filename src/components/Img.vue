@@ -8,7 +8,7 @@ import {
   ref,
   watch,
 } from "vue";
-import { undefinedProp } from "../utils/main";
+import { undefinedProp, undefinedStringProp } from "../utils/main";
 import { Cloudinary } from "cloudinary-core";
 import Intersection from "./Intersection.vue";
 import { DynamicObject } from "../types";
@@ -31,6 +31,7 @@ export default defineComponent({
     width: stringOrNumberProp,
     height: stringOrNumberProp,
     quality: stringOrNumberProp,
+    decoding: undefinedStringProp,
     loadingBackground: {
       type: String,
       default: "bg-card dark:bg-card-dark",
@@ -53,7 +54,7 @@ export default defineComponent({
         return cl.url(`uiTransition/${publicId}`, {
           transformation: [
             {
-              height: "300",
+              height,
               width,
               quality,
             },
@@ -84,7 +85,7 @@ export default defineComponent({
           alt: props.value.alt,
           height: props.value.height,
           width: props.value.width,
-          decoding: "async",
+          decoding: props.value.decoding || 'async',
           crossorigin: "anonymous",
           "data-src-cache": props.value.publicId ? getSrc.value : undefined,
           class: [
@@ -93,7 +94,7 @@ export default defineComponent({
               [props.value.loadingBackground]: !loaded.value,
             },
           ],
-          ...(loadedSrc[getSrc.value]
+          ...(!loadedSrc[getSrc.value]
             ? {
                 onAnimationend: (e: AnimationEvent) => {
                   emit("animationend", e);
