@@ -11,14 +11,14 @@
     @update:modelValue="toggleModel"
   >
     <template #header>
-      <button
+      <div
         :class="[
           'outline-none grid w-full text-headline dark:text-headline-dark',
           { 'font-bold': modelValue, 'font-medium': !modelValue },
         ]"
       >
         <slot name="header" />
-      </button>
+      </div>
     </template>
 
     <div>
