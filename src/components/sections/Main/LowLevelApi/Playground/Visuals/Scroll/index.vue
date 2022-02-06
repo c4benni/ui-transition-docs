@@ -3,17 +3,29 @@
     <p
       class="mt-[24px] pb-[8px] border-b border-gray-200 dark:border-gray-700 mx-[12px] font-bold text-[1.25em]"
     >
-      Scroll
+      Click button
     </p>
 
-    <div class="pt-[16px] grid gap-y-[16px] h-full max-h-full overflow-y-auto">
-      <div v-for="i in 4" :key="i">
+    <div ref="wrapper" class="grid h-full max-h-full overflow-y-auto relative" style="--scrollbar-width: 4px;">
+      <div
+        v-for="i in 4"
+        :key="i"
+        :id="`section-${i}`"
+        :class="[{ 'mt-[12px]': i === 1 }]"
+      >
         <div
-          class="flex font-semibold justify-between items-center text-headline dark:text-headline-dark px-[12px] h-[32px]"
+          class="flex font-semibold justify-between items-center text-headline dark:text-headline-dark px-[12px] h-[48px] bg-surface dark:bg-black sticky top-0 z-1"
         >
           Section {{ i }}
 
-          <Button v-if="i !== 4" icon class="w-[32px] h-[32px] translate-y-0 scale-100">
+          <Button
+            v-if="i !== 4"
+            icon
+            tabindex="-1"
+            tag="div"
+            class="w-[32px] h-[32px] translate-y-0 scale-100 before:opacity-10 can-hover:hover:before:opacity-[0.15] active:before:opacity-20"
+            @click="jumpTo(i + 1)"
+          >
             <IconWrapper>
               <JumpDown />
             </IconWrapper>
@@ -44,12 +56,13 @@
         tag="div"
         tabindex="-1"
         size="sm"
-        class="w-full h-[32px] text-[14px]"
+        class="w-full h-[32px] text-[14px] mt-[16px]"
+        @click="scrollToTop"
       >
         Scroll to top
 
         <IconWrapper>
-          <ScrollTop/>
+          <ScrollTop />
         </IconWrapper>
       </Button>
     </div>
@@ -65,15 +78,47 @@ import Button from "../../../../../../Inputs/Button.vue";
 import ScrollTop from "../../../../../../icons/ScrollTop.vue";
 
 export default defineComponent({
-  name: "CustomizableRotateVisuals",
+  name: "LowLevelApiScroll",
   components: {
     Wireframe,
     IconWrapper,
     JumpDown,
     Button,
-    ScrollTop
-},
+    ScrollTop,
+  },
 
-  setup() {},
+  setup() {
+    const wrapper = ref<HTMLElement | null>(null);
+
+    const scrollWrapper = (scrollY: number) => {
+      if (wrapper.value instanceof HTMLElement) {
+        wrapper.value.scrollTo(0, scrollY);
+      }
+    };
+
+    const jumpTo = (id: number) => {
+      if (wrapper.value instanceof HTMLElement) {
+        const nextEl = wrapper.value.querySelector(
+          `#section-${id}`
+        ) as unknown as HTMLElement;
+
+        if (nextEl) {
+          const offsetTop = nextEl.offsetTop;
+
+          scrollWrapper(offsetTop)
+        }
+      }
+    };
+
+    const scrollToTop = ()=> {
+      scrollWrapper(0)
+    }
+
+    return {
+      wrapper,
+      jumpTo,
+      scrollToTop
+    };
+  },
 });
 </script>
