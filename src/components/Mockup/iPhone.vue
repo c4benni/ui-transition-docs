@@ -27,7 +27,7 @@
             <slot />
 
             <div
-              class="rounded-full h-[4px] w-[min(35%,200px)] absolute bottom-2 pointer-events-none bg-current opacity-[0.15]"
+              class="rounded-full h-[4px] w-[min(35%,200px)] absolute bottom-2 pointer-events-none bg-current opacity-[0.15] z-50"
             />
           </div>
         </div>
@@ -121,7 +121,7 @@ export default defineComponent({
 }
 
 .screen {
-  @apply h-full w-full bg-surface dark:bg-[#000] max-w-full;
+  @apply h-full w-full bg-surface dark:bg-[#000] max-w-full isolate;
   --corner: 32px;
 }
 
