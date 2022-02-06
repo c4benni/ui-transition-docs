@@ -1,73 +1,33 @@
 <template>
   <Wireframe class="flex flex-col isolate">
-    <Generic showHeader>
-      <template #headerAction>
-        <div
-          tag="div"
-          tabindex="-1"
-          class="w-[30px] h-[30px] rounded-full bg-current opacity-[0.07]"
-        />
-      </template>
-    </Generic>
-
-    <Button
-      tag="div"
-      tabindex="-1"
-      size="sm"
-      :class="[
-        'text-[14px] rounded-full absolute bottom-[8px] md:bottom-[42px] left-[50%] translate-x-[-50%] translate-y-0 scale-100 px-[16px]',
-        {
-          invisible: showDialog
-        }
-      ]"
-      :disabled="showDialog"
-      @click="showDialog = true"
+    <p
+      class="mt-[24px] pb-[8px] mb-[32px] border-b border-gray-200 dark:border-gray-700 mx-[12px] font-bold text-[1.25em]"
     >
-      <IconWrapper>
-        <Share />
-      </IconWrapper>
-
-      Share
-    </Button>
-
+      FAQ
+    </p>
     <div
-      :class="[
-        'absolute w-h-full top-0 left-0 grid items-center justify-center z-1',
-        {
-          'pointer-events-none': !showDialog,
-        },
-      ]"
+      class="px-[12px] grid gap-y-[12px]"
     >
-      <template v-if="showDialog">
-        <div
-          class="w-h-full bg-black/50 absolute top-0 left-0"
-          @click="showDialog = false"
-        />
+      <Accordion
+        v-for="item in 3"
+        :key="item"
+        :model-value="activeIndex === item"
+      >
+        <template #header> 
+          <div
+            class="p-[16px] w-full text-left"
+            @click.stop="toggleActiveIndex(item)"
+          >
+            Hello  
+          </div>  
+        </template>
 
         <div
-          class="bg-white dark:bg-card-dark shadow-2xl dark:shadow-none rounded-lg px-[32px] pt-[12px] pb-[16px] relative z-1 border border-gray-200 dark:border-gray-600/20"
+          class="p-[12px] rounded-[12px] rounded-t-none border-t bg-surface dark:bg-surface-dark border-gray-400/60 dark:border-gray-600/50 text-paragraph dark:text-paragraph-dark text-[0.9em] leading-relaxed"
         >
-          <div class="font-bold text-center mb-[8px] opacity-70 text-[0.85em]">
-            Share
-          </div>
-
-          <ul class="grid grid-cols-2 gap-[16px]">
-            <Button
-              v-for="action in shareActions"
-              :key="action.icon"
-              tag="li"
-              tabindex="-1"
-              class="w-[36px] h-[36px] rounded-full translate-y-0 scale-100 opacity-100"
-              icon
-              @click="showDialog = false"
-            >
-              <IconWrapper class="text-[18px]">
-                <Component :is="action.icon" />
-              </IconWrapper>
-            </Button>
-          </ul>
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sequi quos commodi maiores nisi quo. Saepe culpa voluptates excepturi repudiandae sunt ea accusamus tenetur? Ab alias suscipit aspernatur rem voluptatum tempora.
         </div>
-      </template>
+      </Accordion>
     </div>
   </Wireframe>
 </template>
@@ -75,43 +35,29 @@
 <script lang="ts">
 import { defineComponent, ref } from "vue";
 import Wireframe from "../Wireframe/index.vue";
-import Generic from "../Wireframe/Generic.vue";
-import Button from "../../../../../../Inputs/Button.vue";
-import IconWrapper from "../../../../../../icons/IconWrapper.vue";
-import Share from "../../../../../../icons/Share.vue";
-import Twitter from "../../../../../../icons/Twitter.vue";
-import Copy from "../../../../../../icons/Copy.vue";
-import Whatsapp from "../../../../../../icons/Whatsapp.vue";
-import Telegram from "../../../../../../icons/Telegram.vue";
+import Accordion from "./Accordion.vue";
 
 export default defineComponent({
   name: "CustomizableRotateVisuals",
   components: {
     Wireframe,
-    Generic,
-    Button,
-    IconWrapper,
-    Share,
-    Twitter,
-    Copy,
-    Whatsapp,
-    Telegram,
+    Accordion,
   },
 
   setup() {
-    const showDialog = ref(false);
+    const activeIndex = ref<number | null>(null);
 
-    const share = (icon: string, color: string) => ({ icon, color });
+    const toggleActiveIndex = (arg: number)=>{
+      if(activeIndex.value === arg){
+        activeIndex.value = null
+      }else{
+        activeIndex.value = arg;
+      }
+    }
 
-    const shareActions = [
-      share("Twitter", ""),
-      share("Telegram", ""),
-      share("Whatsapp", ""),
-      share("Copy", ""),
-    ];
     return {
-      shareActions,
-      showDialog,
+      activeIndex,
+      toggleActiveIndex
     };
   },
 });
