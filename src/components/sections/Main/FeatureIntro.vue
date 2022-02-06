@@ -14,7 +14,9 @@
   <h4
     class="text-sm sm:text-base leading-normal max-w-lg text-card-paragraph dark:text-paragraph-dark mb-7"
   >
-    {{ subtitle }}
+    <slot name="subtitle">
+      {{ subtitle }}
+    </slot>
   </h4>
 
   <RoundActionBtn :title="actionTitle" class="mb-12"/>
@@ -30,7 +32,7 @@ export default defineComponent({
     props: {
         badge: requiredStringProp,
         title: requiredStringProp,
-        subtitle: requiredStringProp,
+        subtitle: undefinedStringProp,
         actionTitle: undefinedStringProp,
     },
     components: { RoundActionBtn }
