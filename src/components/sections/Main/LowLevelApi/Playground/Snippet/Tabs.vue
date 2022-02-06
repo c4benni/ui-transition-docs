@@ -58,16 +58,16 @@ export default defineComponent({
 .after-gradient::after {
   background-image: linear-gradient(
     to right,
-    hsl(0, 0%, 99%, 0),
-    hsl(0, 0%, 99%) 30%
+    hsl(0, 0%, 98%, 0),
+    hsl(0, 0%, 98%) 30%
   );
 }
 
 .dark .after-gradient::after {
   background-image: linear-gradient(
     to right,
-    hsl(180,5%,6%,0%),
-    hsl(180,5%,6%) 30%
+    hsl(180,5%,7%,0%),
+    hsl(180,5%,7%) 30%
   );
 }
 </style>
