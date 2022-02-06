@@ -1,60 +1,45 @@
 <template>
-  <div class="h-w-full">
-    <div
-      class="mx-[8px] mt-[24px] pb-[4px] mb-[24px] border-b border-gray-200 dark:border-gray-700"
+  <Wireframe>
+    <p
+      class="mt-[24px] pb-[8px] border-b border-gray-200 dark:border-gray-700 mx-[12px] font-bold text-[1.25em]"
     >
-      <p class="font-bold text-[1.15em] text-headline dark:text-headline-dark">Unsplash images</p>
+      Animate path
+    </p>
 
-      <p class="text-[0.85em] font-medium text-paragraph dark:text-paragraph-dark mt-[2px]">Click to expand</p>
-    </div>
+    <div class="grid h-full justify-items-center -mt-[48px] content-center">
+      <IconWrapper class="text-[72px]">
+        <Azure />
+      </IconWrapper>
 
-    <div
-      class="grid grid-rows-3 grid-cols-2 gap-x-[8px] gap-y-[12px] px-[8px] max-h-full"
-    >
-      <figure
-        v-for="(image, i) in splashImages"
-        :key="image.id"
-        :id="image.id"
-        class="cursor-pointer transition-opacity duration-75 active:opacity-70 group"
-        @click="selected = i"
+      <Button
+        tag="div"
+        tabindex="-1"
+        class="translate-y-0 scale-100 opacity-100 text-[14px] mt-[24px]"
+        size="sm"
+        text
       >
-        <Img
-          :public-id="image.src"
-          :alt="`Splash Image by ${image.owner}`"
-          quality="5"
-          height="96"
-          class="rounded h-[96px] w-full object-cover border border-gray-300/40 dark:border-gray-700/60 can-hover:group-hover:opacity-90 transition-opacity"
-        />
-
-        <figcaption
-          class="text-[0.8em] text-paragraph dark:text-paragraph-dark truncate max-w-full overflow-hidden"
-        >
-          By
-          <strong>
-            {{ image.owner }}
-          </strong>
-        </figcaption>
-      </figure>
+        Reset
+        <IconWrapper>
+          <Reset />
+        </IconWrapper>
+      </Button>
     </div>
-
-    <Dialog />
-  </div>
+  </Wireframe>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import Img from "../../../../../../Img.vue";
-import { splashImages, selected } from "./state";
-import Dialog from "./Dialog.vue";
+import Wireframe from "../../../../Wireframe.vue";
+import IconWrapper from "../../../../../../icons/IconWrapper.vue";
+import Azure from "../../../../../../icons/Azure.vue";
+import Button from "../../../../../../Inputs/Button.vue";
+import Reset from "../../../../../../icons/Reset.vue";
 
 export default defineComponent({
-  name: "Deferred",
-  components: { Img, Dialog },
+  name: "LowLevelApiPath",
+  components: { Wireframe, IconWrapper, Azure, Button, Reset },
   setup() {
-    return {
-      splashImages,
-      selected,
-    };
+    return {};
   },
 });
 </script>
