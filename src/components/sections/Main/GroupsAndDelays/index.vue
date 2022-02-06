@@ -20,8 +20,7 @@ import Playground from './Playground/index.vue'
 
 export default defineComponent({
     name: "GroupsAndDelays",
-    setup() {
-    },
+
     components: { FeatureIntro, Playground }
 })
 </script>
