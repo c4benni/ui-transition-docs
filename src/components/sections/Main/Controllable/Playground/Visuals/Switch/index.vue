@@ -1,9 +1,15 @@
 <template>
   <Wireframe>
-    <div
-      class="flex items-center justify-center h-full"
+    <p
+      class="mt-[24px] pb-[8px] border-b border-gray-200 dark:border-gray-700 mx-[12px] font-bold text-[1.25em]"
     >
-      <label for="check" class="mr-[8px] text-paragraph dark:text-paragraph-dark"> Toggle </label>
+      Switch
+    </p>
+
+    <div
+      class="flex items-center justify-center h-full mt-[-48px]"
+    >
+      <label for="check" class="mr-[8px] cursor-pointer text-paragraph dark:text-paragraph-dark"> Toggle </label>
       <Switch id="check" />
     </div>
   </Wireframe>
