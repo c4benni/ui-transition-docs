@@ -7,15 +7,18 @@
       class="absolute h-[calc(100%-186px)] w-full rounded-[inherit] top-0 left-0 object-cover object-center scale-125 origin-bottom"
     />
 
-    <Button
-      tag="span"
-      tabindex="-1"
-      class="text-black dark:text-white w-[32px] h-[32px] rounded-full shadow-xl translate-y-0 scale-100 pointer-events-none absolute z-1 top-[8px] left-[8px] clip-none bg-white dark:bg-card-dark"
-    >
-      <IconWrapper>
-        <Menu />
-      </IconWrapper>
-    </Button>
+    <UiTransition :config="['scale', 'fade']">
+      <Button
+        v-if="!bottomSheetState"
+        tag="span"
+        tabindex="-1"
+        class="text-black dark:text-white w-[32px] h-[32px] rounded-full shadow-xl translate-y-0 scale-100 pointer-events-none absolute z-1 top-[8px] left-[8px] clip-none bg-white dark:bg-card-dark"
+      >
+        <IconWrapper>
+          <Menu />
+        </IconWrapper>
+      </Button>
+    </UiTransition>
 
     <div
       :class="[
