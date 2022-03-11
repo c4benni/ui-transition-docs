@@ -1,5 +1,11 @@
 <template>
-  <UiTransition config="slideY" spring="stiff">
+  <UiTransition
+    :config="{
+      enter: 'slideY',
+      leave: ['slideY', 'fade'],
+    }"
+    spring="stiff"
+  >
     <ul
       v-if="!expanded"
       :class="[
