@@ -1,25 +1,26 @@
 {
-  "name": "ui-transition-docs",
-  "version": "0.0.0",
-  "scripts": {
-    "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "cloudinary-core": "^2.12.3",
-    "prismjs": "^1.26.0",
-    "vue": "^3.2.25",
-    "vue-prism-editor": "^2.0.0-alpha.2"
-  },
-  "devDependencies": {
-    "@types/prismjs": "^1.26.0",
-    "@vitejs/plugin-vue": "^2.0.0",
-    "autoprefixer": "^10.4.2",
-    "postcss": "^8.4.5",
-    "tailwindcss": "^3.0.18",
-    "typescript": "^4.4.4",
-    "vite": "^2.7.2",
-    "vue-tsc": "^0.29.8"
-  }
+    "name": "ui-transition-docs",
+    "version": "0.0.0",
+    "scripts": {
+        "dev": "vite",
+        "build": "vue-tsc --noEmit && vite build",
+        "preview": "vite preview"
+    },
+    "dependencies": {
+        "cloudinary-core": "^2.12.3",
+        "prismjs": "^1.26.0",
+        "ui-transition": "^0.0.208",
+        "vue": "^3.2.25",
+        "vue-prism-editor": "^2.0.0-alpha.2"
+    },
+    "devDependencies": {
+        "@types/prismjs": "^1.26.0",
+        "@vitejs/plugin-vue": "^2.0.0",
+        "autoprefixer": "^10.4.2",
+        "postcss": "^8.4.5",
+        "tailwindcss": "^3.0.18",
+        "typescript": "^4.4.4",
+        "vite": "^2.7.2",
+        "vue-tsc": "^0.29.8"
+    }
 }
