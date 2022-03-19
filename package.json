@@ -9,7 +9,7 @@
     "dependencies": {
         "cloudinary-core": "^2.12.3",
         "prismjs": "^1.26.0",
-        "ui-transition": "^0.0.208",
+        "ui-transition": "^0.0.209",
         "vue": "^3.2.25",
         "vue-prism-editor": "^2.0.0-alpha.2"
     },
