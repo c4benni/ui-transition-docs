@@ -6,31 +6,39 @@
     @click="toggle(!isChecked)"
   >
     <!-- track -->
-    <div 
-      v-if="isChecked"
-      class="bg-primary dark:bg-primary-dark absolute rounded-[inherit] w-full h-full"
-    />
+    <UiTransition>
+      <div
+        v-if="isChecked"
+        class="bg-primary dark:bg-primary-dark absolute rounded-[inherit] w-full h-full"
+      />
+    </UiTransition>
 
     <!-- thumb -->
 
-    <div
-      :class="[
-        'w-[25px] h-[25px] rounded-full bg-white dark:bg-gray-100 z-1 mx-[1.5px] shadow-md',
-        {
-          'translate-x-[16px]': isChecked
-        }
-      ]"
+    <UiTransition
+      :config="{
+        leave: false,
+        enter: isChecked ? 'slideX(0, 16, `px`)' : 'slideX(16, 0, `px`)',
+      }"
+      retain-final-style
     >
-      <input
-        ref="input"
-        v-bind="inputAttrs"
-        type="checkbox"
-        class="sr-only left-[50%] top-[50%]"
-        :id="id"
-        :checked="isChecked"
-        @input="onInput"
-      />
-    </div>
+      <div
+        :key="`${isChecked}`"
+        :class="[
+          'w-[25px] h-[25px] rounded-full bg-white dark:bg-gray-100 z-1 mx-[1.5px] shadow-md',
+        ]"
+      >
+        <input
+          ref="input"
+          v-bind="inputAttrs"
+          type="checkbox"
+          class="sr-only left-[50%] top-[50%]"
+          :id="id"
+          :checked="isChecked"
+          @input="onInput"
+        />
+      </div>
+    </UiTransition>
   </div>
 </template>
 
@@ -43,16 +51,16 @@ export default defineComponent({
   props: {
     modelValue: {
       type: Boolean,
-      default: undefined
+      default: undefined,
     },
     id: {
-      type:String,
-      default: undefined
+      type: String,
+      default: undefined,
     },
-    inputAttrs:{
-      type:Object,
-      default:()=>({})
-    }
+    inputAttrs: {
+      type: Object,
+      default: () => ({}),
+    },
   },
   setup(p, { emit }) {
     const props = computed(() => p);
@@ -75,26 +83,26 @@ export default defineComponent({
         emit("update:modelValue", value);
       }
 
-      state.value = value;  
-      
-      if(input.value){
+      state.value = value;
+
+      if (input.value) {
         const inputEl = input.value as unknown as HTMLInputElement;
 
-        inputEl.focus?.()
+        inputEl.focus?.();
       }
     };
 
     const onInput = (e: Event) => {
       const target = e.target as unknown as HTMLInputElement;
 
-      toggle(target.checked)
+      toggle(target.checked);
     };
 
     return {
       toggle,
       onInput,
       isChecked,
-      input
+      input,
     };
   },
 });
