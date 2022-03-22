@@ -1,28 +1,28 @@
 <template>
-  <ul
-    :class="[
-      'h-[64px] absolute bottom-0 w-full border-t-[0.75px] flex justify-around bg-white dark:bg-surface-dark pb-[16px]  border-t-gray-200 dark:border-t-gray-800 px-[12px] pointer-events-none',
-      'transform-gpu transition-transform',
-      {
-        'translate-y-[100%]':expanded
-      }
-    ]"
-  >
-    <IconWrapper
-      v-for="(icon, i) in navIcons"
-      :key="icon"
-      tag="li"
+  <UiTransition config="slideY" spring="stiff">
+    <ul
+      v-if="!expanded"
       :class="[
-        'text-[19px]',
-        {
-          'opacity-70': i !== 0,
-          [primaryColor]: i === 0,
-        },
+        'h-[64px] absolute bottom-0 w-full border-t-[0.75px] flex justify-around bg-white dark:bg-surface-dark pb-[16px]  border-t-gray-200 dark:border-t-gray-800 px-[12px] pointer-events-none',
+        'transform-gpu transition-transform',
       ]"
     >
-      <Component :is="icon" />
-    </IconWrapper>
-  </ul>
+      <IconWrapper
+        v-for="(icon, i) in navIcons"
+        :key="icon"
+        tag="li"
+        :class="[
+          'text-[19px]',
+          {
+            'opacity-70': i !== 0,
+            [primaryColor]: i === 0,
+          },
+        ]"
+      >
+        <Component :is="icon" />
+      </IconWrapper>
+    </ul>
+  </UiTransition>
 </template>
 
 <script lang="ts">
@@ -44,7 +44,7 @@ export default defineComponent({
   },
 
   props: {
-    expanded:Boolean,
+    expanded: Boolean,
     primaryColor: {
       type: String,
       required: true,

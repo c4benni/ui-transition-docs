@@ -31,14 +31,25 @@
       Switch tabs and watch Fab below for effect.
     </p>
 
-    <Button
-      class="w-[56px] h-[56px] rounded-[16px] text-2xl absolute right-[20px] bottom-[20px] md:bottom-[42px] md:right-[16px] translate-y-0 scale-100 shadow-xl clip-none bg-green-600 dark:bg-green-500 text-white"
-      :primary="false"
+    <UiTransition
+      :config="{
+        enter: rotateState ? 'rotate(-45)' : 'rotate(45)',
+        leave: false,
+      }"
     >
-      <IconWrapper>
-        <Component :is="rotateState === 0 ? 'Phone' : 'NewMessage'" />
-      </IconWrapper>
-    </Button>
+      <Button
+        :key="`${rotateState}`"
+        tabindex="-1"
+        class="w-[56px] h-[56px] rounded-[16px] text-2xl absolute right-[20px] bottom-[20px] md:bottom-[42px] md:right-[16px] translate-y-0 scale-100 shadow-xl clip-none bg-green-600 dark:bg-green-500 text-white"
+        :primary="false"
+      >
+        <IconWrapper>
+          <UiTransition>
+            <Component :is="rotateState === 0 ? 'Phone' : 'NewMessage'" />
+          </UiTransition>
+        </IconWrapper>
+      </Button>
+    </UiTransition>
   </Wireframe>
 </template>
 
@@ -64,8 +75,8 @@ export default defineComponent({
     Close,
     Button,
     NewMessage,
-    Phone
-},
+    Phone,
+  },
 
   setup() {
     const rotateState = computed(() => visualsState.value.Rotate);

@@ -14,55 +14,68 @@
         },
       ]"
     >
-      <div
-        v-if="dialogState"
-        class="bg-black/60 w-h-full absolute top-0 left-0 rounded-[inherit]"
-        @click="closeDialog"
-      />
+      <UiTransition spring="stiff">
+        <div
+          v-if="dialogState"
+          class="bg-black/60 w-h-full absolute top-0 left-0 rounded-[inherit]"
+          @click="closeDialog"
+        />
+      </UiTransition>
 
-      <div
-        v-if="dialogState"
-        :class="[
-          'rounded-[6px] bg-white dark:bg-card-dark border relative z-1 border-gray-300 shadow-2xl dark:shadow-none dark:border-gray-600/[0.25] text-center',
-        ]"
+      <UiTransition
+        :config="['scale(1.1)', 'fade']"
+        :spring="{
+          enter: 'wobbly',
+        }"
       >
         <div
+          v-if="dialogState"
           :class="[
-            'px-[10px] pt-[12px] pb-[16px] text-[12px]',
-            classNames.paragraph,
+            'rounded-[6px] bg-white dark:bg-card-dark border relative z-1 border-gray-300 shadow-2xl dark:shadow-none dark:border-gray-600/[0.25] text-center',
           ]"
         >
-          <div :class="['font-bold text-[16px] mb-[4px]', classNames.headline]">
-            Alert
+          <div
+            :class="[
+              'px-[10px] pt-[12px] pb-[16px] text-[12px]',
+              classNames.paragraph,
+            ]"
+          >
+            <div
+              :class="['font-bold text-[16px] mb-[4px]', classNames.headline]"
+            >
+              Alert
+            </div>
+
+            Are you sure about this?
+            <br />
+            This action cannot be reversed.
           </div>
 
-          Are you sure about this?
-          <br />
-          This action cannot be reversed.
-        </div>
-
-        <div :class="['flex border-t border-gray-200 dark:border-gray-600/50']">
-          <Button
-            v-for="(action, i) in actions"
-            :key="action"
-            tabindex="-1"
-            :primary="false"
-            tag="div"
-            size="sm"
-            :class="[
-              'text-[14px] active:scale-100 scale-100 px-0 flex-grow translate-y-0 clip-none rounded-none',
-              {
-                'rounded-bl border-r border-gray-200 dark:border-gray-600/50':
-                  i === 0,
-                'rounded-br text-primary dark:text-primary-dark': i === 1,
-              },
-            ]"
-            @click="closeDialog"
+          <div
+            :class="['flex border-t border-gray-200 dark:border-gray-600/50']"
           >
-            {{ action }}
-          </Button>
+            <Button
+              v-for="(action, i) in actions"
+              :key="action"
+              tabindex="-1"
+              :primary="false"
+              tag="div"
+              size="sm"
+              :class="[
+                'text-[14px] active:scale-100 scale-100 px-0 flex-grow translate-y-0 clip-none rounded-none',
+                {
+                  'rounded-bl border-r border-gray-200 dark:border-gray-600/50':
+                    i === 0,
+                  'rounded-br text-primary dark:text-primary-dark': i === 1,
+                },
+              ]"
+              @click="closeDialog"
+            >
+              {{ action }}
+            </Button>
+          </div>
         </div>
-      </div>
+      </UiTransition>
     </div>
   </Wireframe>
 </template>

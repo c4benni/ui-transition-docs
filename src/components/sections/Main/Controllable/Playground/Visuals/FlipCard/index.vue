@@ -1,18 +1,20 @@
 <template>
   <Wireframe class="py-[12px] flex flex-col justify-center">
-    <div
-      :class="[
-        'card',
-        {
-          active: flipped,
-        },
-      ]"
-      @click="flipped = !flipped"
-    >
-      <div class="content">
-        <div class="front bg-green-500">Front</div>
-        <div class="back bg-red-500">Back!</div>
-      </div>
+    <div class="card" @click="flipped = !flipped">
+      <UiTransition
+        :config="{
+          leave: false,
+          enter: flipped ? 'rotateX' : 'rotateX(180,0)',
+        }"
+        :spring="flipped ? 'gentle' : 'wobbly'"
+        :appear="false"
+        retain-final-style
+      >
+        <div :key="`${flipped}`" class="content" :class="{ active: flipped }">
+          <div class="front bg-green-500">Front</div>
+          <div class="back bg-red-500">Back!</div>
+        </div>
+      </UiTransition>
     </div>
 
     <Button
@@ -39,7 +41,7 @@ export default defineComponent({
   components: { Wireframe, GenericWireframe, Button },
 
   setup() {
-    const flipped = ref(false);
+    const flipped = ref(true);
 
     return {
       flipped,
@@ -65,7 +67,7 @@ export default defineComponent({
   transition-duration: 500ms;
 }
 
-.card.active .content {
+.active.content {
   transform: rotateX(180deg);
 }
 

@@ -1,72 +1,110 @@
 <template>
-  <div
-    :class="[
-      'h-[calc(100%-1rem)] bottom-[16px] absolute w-full pointer-events-none',
-      'transform-gpu transition-transform bg-white dark:bg-surface-dark border',
-      classNames.divideColor,
-      {
-        'translate-y-[calc(100%-96px)]': !expanded,
-        'rounded-t-[16px] translate-y-[16px] shadow-t': expanded,
-      },
-    ]"
+  <UiTransition
+    :config="{
+      enter: expanded ? 'drawer' : false,
+      leave: expanded ? false : 'drawer',
+    }"
+    spring="stiff"
+    retain-final-style
+    #default="{ inProgress, animate }"
   >
     <div
+      ref="drawerRoot"
+      :style="
+        !inProgress && !expanded
+          ? {
+              transform: 'translateY(calc(100% - 96px))',
+            }
+          : undefined
+      "
       :class="[
-        'flex justify-between items-center h-[48px] px-[12px] pointer-events-auto',
+        'h-[calc(100%-1rem)] bottom-[16px] absolute w-full pointer-events-none',
+        'bg-white dark:bg-surface-dark border',
+        classNames.divideColor,
         {
-          invisible: expanded,
+          'rounded-t-[16px] shadow-t': expanded,
         },
       ]"
-      @click="$emit('toggle-expand', true)"
     >
-      <Img
-        :public-id="artwork"
-        quality="50"
-        class="h-[38px] w-[38px] rounded-[4px]"
-      />
-
-      <p class="truncate mx-[8px] text-[0.8em]">
-        {{ title }}
-      </p>
-
-      <div class="grid grid-flow-col gap-x-[8px] text-[1.2em]">
-        <IconWrapper
-          v-for="icon in collapsedIcons"
-          :key="icon.title"
-          :tag="icon.onClick ? 'button' : 'span'"
-          tabindex="-1"
-          @click="icon.onClick"
+      <UiTransition
+        :config="{
+          enter: ['fade', 'slideY(10)'],
+          leave: false,
+        }"
+      >
+        <div
+          v-if="!expanded && !inProgress"
+          :class="[
+            'flex justify-between items-center h-[48px] px-[12px] pointer-events-auto transition-[opacity,transform]',
+            {
+              'opacity-0 translate-y-2': inProgress || expanded,
+            },
+          ]"
+          @click="$emit('toggle-expand', true), animate(drawerRoot, 'drawer')"
         >
-          <Component :is="icon.title" />
+          <Img
+            :public-id="artwork"
+            quality="50"
+            class="h-[38px] w-[38px] rounded-[4px]"
+          />
+
+          <p class="truncate mx-[8px] text-[0.8em]">
+            {{ title }}
+          </p>
+
+          <div class="grid grid-flow-col gap-x-[8px] text-[1.2em]">
+            <IconWrapper
+              v-for="icon in collapsedIcons"
+              :key="icon.title"
+              :tag="icon.onClick ? 'button' : 'span'"
+              tabindex="-1"
+              @click="icon.onClick"
+            >
+              <Component :is="icon.title" />
+            </IconWrapper>
+          </div>
+        </div>
+      </UiTransition>
+
+      <!-- drawer content -->
+      <UiTransition
+        :config="['slideY(10)', 'fade']"
+        :delay="250"
+        spring="wobbly"
+      >
+        <Content
+          v-if="expanded"
+          :src="artwork"
+          :expanded="expanded"
+          :class-names="classNames"
+          :title="title"
+          :primary-color="primaryColor"
+          :playing="state.playing"
+          class="mt-[32px]"
+          @is-playing="(e) => (state.playing = e)"
+        />
+      </UiTransition>
+
+      <!-- after enter show close icon -->
+      <UiTransition>
+        <IconWrapper
+          v-if="expanded"
+          tag="button"
+          tabindex="-1"
+          :class="[
+            'text-[1.25em] absolute top-[6px] right-[10px] pointer-events-auto cursor-pointer',
+            classNames.paragraph,
+          ]"
+          @click="
+            $emit('toggle-expand', false),
+              animate(drawerRoot, `drawer('leave')`)
+          "
+        >
+          <CloseFilled />
         </IconWrapper>
-      </div>
+      </UiTransition>
     </div>
-
-    <!-- drawer content -->
-    <Content
-      :src="artwork"
-      :expanded="expanded"
-      :class-names="classNames"
-      :title="title"
-      :primary-color="primaryColor"
-      :playing="state.playing"
-      @is-playing="(e) => (state.playing = e)"
-    />
-
-    <!-- after enter show close icon -->
-    <IconWrapper
-      v-if="expanded"
-      tag="button"
-      tabindex="-1"
-      :class="[
-        'text-[1.25em] absolute top-[6px] right-[10px] pointer-events-auto',
-        classNames.paragraph,
-      ]"
-      @click="$emit('toggle-expand', false)"
-    >
-      <CloseFilled />
-    </IconWrapper>
-  </div>
+  </UiTransition>
 </template>
 
 <script lang="ts">
@@ -119,7 +157,9 @@ export default defineComponent({
 
     const artwork = "intro-mockup/podcast/daily-show_y01a50.jpg";
 
-    return { title, collapsedIcons, artwork, state };
+    const drawerRoot = ref(null);
+
+    return { title, collapsedIcons, artwork, state, drawerRoot };
   },
 });
 </script>

@@ -2,10 +2,10 @@
   <section
     class="mt-6 xs:mt-12 sm:mt-12 grid md:grid-cols-[1fr,400px] md:gap-x-3 lg:gap-x-6"
   >
-    <div class="grid md:grid-rows-[164px,140px,auto] items-start">
+    <div class="grid md:grid-rows-[188px,140px,auto] items-start">
       <h2
         :class="[
-          'font-extrabold text-3xl xs:text-4xl sm:text-5xl leading-normal xs:leading-normal sm:leading-normal mb-6 md:mb-3 col-start-1 justify-self-center md:justify-self-start',
+          'font-extrabold text-3xl xs:text-4xl sm:text-[56px] leading-normal xs:leading-normal sm:leading-normal mb-6 md:mb-3 col-start-1 justify-self-center md:justify-self-start',
         ]"
       >
         Create Dynamic <br />CSS Springs.

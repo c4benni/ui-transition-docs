@@ -81,8 +81,8 @@ app.use(uiTransition, {
       },
     }),
 
-    drawer: () => ({
-      frame: (step, phase) => {
+    drawer: (phase: "enter" | "leave" = "enter") => ({
+      frame: (step) => {
         const build = {
           enter: {
             transform: `translate3d(0, calc(${step(100, 0)}% - ${step(

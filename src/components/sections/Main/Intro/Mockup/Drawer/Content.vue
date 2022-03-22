@@ -1,22 +1,31 @@
 <template>
-  <div
-    :class="[
-      'mt-[-32px] pointer-events-auto isolate',
-      {
-        invisible: !expanded,
-      },
-    ]"
-  >
-    <Img
-      :public-id="src"
-      :class="[
-        'w-[calc(100%-32px)] h-[224px] mt-[16px] mx-auto rounded-[6px] shadow-xl object-cover',
-        'transform-gpu transition-transform',
-        {
-            'scale-75':!playing
-        }
-      ]"
-    />
+  <div :class="['mt-[-32px] pointer-events-auto isolate']">
+    <UiTransition
+      :config="{
+        enter: playing ? 'scale(0.75)' : 'scale(1, 0.75)',
+        leave: false,
+      }"
+      :spring="playing ? 'gentle' : 'default'"
+      #default="{ inProgress }"
+    >
+      <div
+        :key="`${playing}`"
+        :style="
+          inProgress || playing
+            ? undefined
+            : {
+                transform: 'scale(0.75)',
+              }
+        "
+      >
+        <Img
+          :public-id="src"
+          :class="[
+            'w-[calc(100%-32px)] h-[224px] mt-[16px] mx-auto rounded-[6px] shadow-xl object-cover',
+          ]"
+        />
+      </div>
+    </UiTransition>
 
     <div
       :class="[
@@ -51,21 +60,24 @@
         classNames.headline,
       ]"
     >
-      <IconWrapper
-        v-for="action in actionIcons"
-        :key="action.icon"
-        :tag="action.onClick ? 'button' : 'span'"
-        :tabindex="action.onClick ? '-1' : undefined"
-        :class="[
-          {
-            'text-[2em] opacity-90': !action.onClick,
-            'text-[2.5em]': action.onClick,
-          },
-        ]"
-        @click="action.onClick"
-      >
-        <Component :is="action.icon" />
-      </IconWrapper>
+      <template v-for="(action, i) in actionIcons" :key="i">
+        <UiTransition spring="gentle" :duration="200" config="scale(0.8)">
+          <IconWrapper
+            :key="action.icon"
+            :tag="action.onClick ? 'button' : 'span'"
+            :tabindex="action.onClick ? '-1' : undefined"
+            :class="[
+              {
+                'text-[2em] opacity-90': !action.onClick,
+                'text-[2.5em]': action.onClick,
+              },
+            ]"
+            @click="action.onClick"
+          >
+            <Component :is="action.icon" />
+          </IconWrapper>
+        </UiTransition>
+      </template>
     </div>
 
     <div
@@ -162,6 +174,6 @@ export default defineComponent({
 }
 
 .volume {
-  @apply before:w-[70%] after:w-[18px] after:h-[18px] after:shadow-md after:left-[calc(70%-3px)] after:bg-headline dark:after:bg-headline-dark ;
+  @apply before:w-[70%] after:w-[18px] after:h-[18px] after:shadow-md after:left-[calc(70%-3px)] after:bg-headline dark:after:bg-headline-dark;
 }
 </style>
