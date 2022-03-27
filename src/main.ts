@@ -65,15 +65,17 @@ app.use(uiTransition, {
       };
     },
 
-    slideY: (from = 100, to = 0) => ({
+    slideY: (from = 100, to = 0, unit = "%") => ({
       frame: (step, phase) => {
         const build = {
           enter: {
-            transform: `translate3d(0, ${step(from, to)}%, 0)`,
+            transform: `translate3d(0, ${step(from, to)}${unit}, 0)`,
+            willChange: "transform",
           },
 
           leave: {
-            transform: `translate3d(0, ${step(to, from)}%, 0)`,
+            transform: `translate3d(0, ${step(to, from)}${unit}, 0)`,
+            willChange: "transform",
           },
         };
 
