@@ -6,9 +6,13 @@
     @click="copyText"
   >
     {{ text }}
-    <IconWrapper :class="copyIcon.class">
-      <Component :is="copyIcon.icon" />
-    </IconWrapper>
+    <UiTransition
+      :config="copyIcon.icon === 'CopyIcon' ? 'fade' : ['scale(0.75)', 'fade']"
+    >
+      <IconWrapper :key="copyIcon.icon" :class="copyIcon.class">
+        <Component :is="copyIcon.icon" />
+      </IconWrapper>
+    </UiTransition>
   </Button>
 </template>
 
