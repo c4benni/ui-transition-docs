@@ -156,7 +156,6 @@ class BreakpointWrapper {
     return this.output.orientation;
   }
 }
-
 export default class Breakpoint implements BreakpointOutput {
   // mimic a proxy to avoid reassigning
   constructor(arg: BreakpointArg) {
